@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:helloworld/services/services.dart';
 
 class loginScreen extends StatelessWidget {
   loginScreen({Key? key}) : super(key: key);
@@ -56,7 +57,7 @@ class loginScreen extends StatelessWidget {
                 icon: const Icon(FontAwesomeIcons.circleArrowRight),
                 style: TextButton.styleFrom(
                     padding: EdgeInsets.all(50), backgroundColor: Colors.blue),
-                onPressed: () {},
+                onPressed: () => Auth().logIn(email, password),
                 label: const Text("")),
           ),
           SizedBox(
@@ -65,7 +66,9 @@ class loginScreen extends StatelessWidget {
           OutlinedButton(
               child: Text('New User? Sign Up Here',
                   style: TextStyle(color: Colors.blue)),
-              onPressed: () {}),
+              onPressed: () {
+                Navigator.pushNamed(context, '/signup');
+              }),
 
           // SizedBox(
           //   height: 50,
