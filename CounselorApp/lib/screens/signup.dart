@@ -137,9 +137,11 @@ class _signupState extends State<signupScreen> {
                     ? () {
                         print("Attemping sign up");
                         Auth().accountCreation(email, password);
+                        Auth().verifyEmail();
                         // TODO: redirect to another screen using Navigator
+                        Navigator.pushNamed(context, '/verification');
                       }
-                    : null,
+                    : null, //textbox for problems
               ),
             ),
 

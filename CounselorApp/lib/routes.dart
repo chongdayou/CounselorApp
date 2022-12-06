@@ -5,6 +5,8 @@
 import 'package:helloworld/screens/login.dart';
 import 'package:helloworld/screens/signup.dart';
 import 'package:helloworld/screens/home.dart';
+import 'package:helloworld/screens/verification.dart';
+import 'package:helloworld/screens/homeScreen.dart';
 
 // import 'package:my_app/profile/profile.dart';
 // import 'package:my_app/login/login.dart';
@@ -12,9 +14,11 @@ import 'package:helloworld/screens/home.dart';
 // import 'package:my_app/home/home.dart';
 
 var screenRoutes = {
-  '/': (context) => const homeScreen(),
+  '/': (context) => startScreen(),
   '/login': (context) => loginScreen(),
   '/signup': (context) => signupScreen(),
+  '/verification': (context) => verificationScreen(),
+  '/home': (context) => homeScreen(),
 };
 // var appRoutes = {
 //   '/': (context) => const HomeScreen(),
