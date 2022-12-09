@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helloworld/shared/bottomBar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class homeScreen extends StatelessWidget {
   homeScreen({super.key});
@@ -17,12 +19,39 @@ class homeScreen extends StatelessWidget {
                   OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
               labelText: 'Search'),
         ),
-        GridView.count(
-          // MediaQuery.of(context).size.shortestSide < 600 ? 2 : 4,
-          crossAxisCount: 1,
-          mainAxisSpacing: 20,
-          children: [],
+        Center(
+            child: FloatingActionButton(
+                backgroundColor: Colors.green,
+                child: Icon(Icons.add),
+                onPressed: () {
+                  FirebaseFirestore.instance
+                      .collection('topics')
+                      .add({'category': 'volunteer'});
+                })),
+        StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('topics').snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return Text("loading");
+            }
+
+            print("Snapshot has data");
+            return ListView(
+              children: snapshot.data!.docs.map((document) {
+                return Container(
+                  child: Center(child: Text(document['category'])),
+                );
+              }).toList(),
+            );
+          },
         ),
+        // GridView.count(
+        //   // MediaQuery.of(context).size.shortestSide < 600 ? 2 : 4,
+        //   crossAxisCount: 1,
+        //   mainAxisSpacing: 20,
+        //   children: [],
+        // ),
       ]),
       bottomNavigationBar: const navigationBar(),
     );
