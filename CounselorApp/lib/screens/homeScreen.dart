@@ -37,21 +37,18 @@ class homeScreen extends StatelessWidget {
             }
 
             print("Snapshot has data");
-            return ListView(
+            return Flexible(
+                child: GridView.count(
+              crossAxisCount: 1,
+              mainAxisSpacing: 20,
               children: snapshot.data!.docs.map((document) {
                 return Container(
                   child: Center(child: Text(document['category'])),
                 );
               }).toList(),
-            );
+            ));
           },
         ),
-        // GridView.count(
-        //   // MediaQuery.of(context).size.shortestSide < 600 ? 2 : 4,
-        //   crossAxisCount: 1,
-        //   mainAxisSpacing: 20,
-        //   children: [],
-        // ),
       ]),
       bottomNavigationBar: const navigationBar(),
     );
