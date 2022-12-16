@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:helloworld/shared/bottomBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:sentiment_dart/sentiment_dart.dart';
+import 'package:helloworld/screens/topic.dart';
 
 class homeScreen extends StatelessWidget {
   homeScreen({super.key});
@@ -41,11 +43,12 @@ class homeScreen extends StatelessWidget {
                 child: GridView.count(
               crossAxisCount: 1,
               mainAxisSpacing: 20,
-              children: snapshot.data!.docs.map((document) {
-                return Container(
-                  child: Center(child: Text(document['category'])),
-                );
-              }).toList(),
+              // children: snapshot.data!.docs.map((document) {
+              //   return Container(
+              //     child: Center(child: Text(document['category'])),
+              //   );
+              // }).toList(),
+              children: [topicEntry(), topicEntry(), topicEntry()],
             ));
           },
         ),
