@@ -17,10 +17,8 @@ class homeScreen extends StatelessWidget {
     // Get docs from collection reference
     QuerySnapshot querySnapshot = await _collectionRef.get();
 
-    // Get data from docs and convert map to List
-    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
-
-    return allData.toList();
+    List<DocumentSnapshot> data = querySnapshot.docs as List<DocumentSnapshot>;
+    return data;
   }
 
   @override
@@ -53,7 +51,7 @@ class homeScreen extends StatelessWidget {
 
             print("Snapshot has data");
 
-            List<Object?> topics = snapshot.data as List<Object?>;
+            List<DocumentSnapshot> topics = snapshot.data as List<DocumentSnapshot>;
 
             return Flexible(
                 child: GridView.count(

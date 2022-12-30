@@ -1,12 +1,12 @@
 import "package:flutter/material.dart";
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class topicEntry extends StatelessWidget {
-  final Object? document;
+  final DocumentSnapshot document;
   const topicEntry({super.key, required this.document});
 
   @override
   Widget build(BuildContext context) {
-    print(document);
     return Hero(
       tag: 'hero-rectangle',
       child: Card(
@@ -27,7 +27,7 @@ class topicEntry extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("test"),
+                      Text(document["title"]),
                       Text('Tags'),
                     ],
                   ),
@@ -39,7 +39,7 @@ class topicEntry extends StatelessWidget {
 }
 
 class TopicScreen extends StatelessWidget {
-  final Object? document;
+  final DocumentSnapshot document;
   const TopicScreen({super.key, required this.document});
 
   @override
