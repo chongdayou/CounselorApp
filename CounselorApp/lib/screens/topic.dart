@@ -1,17 +1,21 @@
 import "package:flutter/material.dart";
 
 class topicEntry extends StatelessWidget {
-  const topicEntry({super.key});
+  final Object? document;
+  const topicEntry({super.key, required this.document});
 
   @override
   Widget build(BuildContext context) {
+    print(document);
     return Hero(
       tag: 'hero-rectangle',
       child: Card(
           color: Color.fromARGB(164, 163, 204, 220),
           child: InkWell(
               onTap: () {
-                // We are going to go to a topic screen here
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: ((BuildContext context) =>
+                        TopicScreen(document: document))));
               },
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -23,7 +27,7 @@ class topicEntry extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Topic"),
+                      Text("test"),
                       Text('Tags'),
                     ],
                   ),
@@ -31,5 +35,15 @@ class topicEntry extends StatelessWidget {
                 ],
               ))),
     );
+  }
+}
+
+class TopicScreen extends StatelessWidget {
+  final Object? document;
+  const TopicScreen({super.key, required this.document});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

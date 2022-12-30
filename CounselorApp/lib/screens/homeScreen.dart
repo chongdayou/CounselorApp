@@ -10,8 +10,22 @@ class homeScreen extends StatelessWidget {
   String searchContent = "";
   TextEditingController searchController = TextEditingController();
 
+  CollectionReference _collectionRef =
+      FirebaseFirestore.instance.collection('topics');
+
+  Future<List<Object?>> getData() async {
+    // Get docs from collection reference
+    QuerySnapshot querySnapshot = await _collectionRef.get();
+
+    // Get data from docs and convert map to List
+    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+    return allData.toList();
+  }
+
   @override
   Widget build(BuildContext context) {
+    getData();
     return Scaffold(
       body: Column(children: [
         TextField(
@@ -30,15 +44,17 @@ class homeScreen extends StatelessWidget {
                       .collection('topics')
                       .add({'category': 'volunteer'});
                 })),
-        StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('topics').snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        FutureBuilder(
+          future: getData(),
+          builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return Text("loading");
             }
 
             print("Snapshot has data");
+
+            List<Object?> topics = snapshot.data as List<Object?>;
+
             return Flexible(
                 child: GridView.count(
               crossAxisCount: 1,
@@ -48,7 +64,9 @@ class homeScreen extends StatelessWidget {
               //     child: Center(child: Text(document['category'])),
               //   );
               // }).toList(),
-              children: [topicEntry(), topicEntry(), topicEntry()],
+              // children: [topicEntry(), topicEntry(), topicEntry()],
+              children:
+                  topics.map((topic) => topicEntry(document: topic)).toList(),
             ));
           },
         ),
