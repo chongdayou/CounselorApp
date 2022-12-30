@@ -44,6 +44,47 @@ class TopicScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
+        backgroundColor: Colors.transparent,
+        title: Text("Example",
+            style: TextStyle(color: Colors.black), textAlign: TextAlign.center),
+        elevation: 0,
+      ),
+      body: Column(
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(
+            height: 50,
+          ),
+          Container(
+            constraints: BoxConstraints(
+              minHeight: 300,
+              maxHeight: 350,
+            ),
+            margin: EdgeInsets.all(10),
+            padding: EdgeInsets.all(10),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.black26,
+                width: 3.0,
+              ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(10.0),
+              ),
+            ),
+            child: Text(
+              "description",
+              style: TextStyle(),
+            ),
+          ),
+          Text("buttons"),
+        ],
+      ),
+    );
   }
 }
