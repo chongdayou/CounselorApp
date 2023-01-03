@@ -8,32 +8,39 @@ class topicEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: 'hero-rectangle',
-      child: Card(
-          color: Color.fromARGB(164, 163, 204, 220),
-          child: InkWell(
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: ((BuildContext context) =>
-                        TopicScreen(document: document))));
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(document["title"]),
-                      Text('Tags'),
-                    ],
-                  ),
-                  Text('Content Preview'),
-                ],
-              ))),
+      tag: document["title"],
+      child: Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+              height: 150,
+              width: MediaQuery.of(context).size.width - 10,
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  color: Color.fromARGB(164, 163, 204, 220),
+                  child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: ((BuildContext context) =>
+                                TopicScreen(document: document))));
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(document["title"]),
+                              Text('Tags'),
+                            ],
+                          ),
+                          Text('Content Preview'),
+                        ],
+                      ))))),
     );
   }
 }
@@ -55,7 +62,7 @@ class TopicScreen extends StatelessWidget {
         elevation: 0,
       ),
       body: Column(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
             height: 50,
@@ -82,7 +89,25 @@ class TopicScreen extends StatelessWidget {
               style: TextStyle(),
             ),
           ),
-          Text("buttons"),
+          SizedBox(height: 100),
+          Container(
+            constraints: BoxConstraints(maxHeight: 200),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                    width: MediaQuery.of(context).size.width / 2 - 10,
+                    height: 70,
+                    child: ElevatedButton(
+                        onPressed: () {}, child: const Text('Join'))),
+                SizedBox(
+                    width: MediaQuery.of(context).size.width / 2 - 10,
+                    height: 70,
+                    child: ElevatedButton(
+                        onPressed: () {}, child: const Text('Contact'))),
+              ],
+            ),
+          ),
         ],
       ),
     );

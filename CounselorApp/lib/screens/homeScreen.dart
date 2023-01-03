@@ -51,12 +51,15 @@ class homeScreen extends StatelessWidget {
 
             print("Snapshot has data");
 
-            List<DocumentSnapshot> topics = snapshot.data as List<DocumentSnapshot>;
+            List<DocumentSnapshot> topics =
+                snapshot.data as List<DocumentSnapshot>;
 
             return Flexible(
                 child: GridView.count(
               crossAxisCount: 1,
               mainAxisSpacing: 20,
+              crossAxisSpacing: 10,
+              shrinkWrap: true,
               // children: snapshot.data!.docs.map((document) {
               //   return Container(
               //     child: Center(child: Text(document['category'])),
