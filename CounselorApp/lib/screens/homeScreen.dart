@@ -56,16 +56,11 @@ class homeScreen extends StatelessWidget {
 
             return Flexible(
                 child: GridView.count(
-              crossAxisCount: 1,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 10,
-              shrinkWrap: true,
-              // children: snapshot.data!.docs.map((document) {
-              //   return Container(
-              //     child: Center(child: Text(document['category'])),
-              //   );
-              // }).toList(),
-              // children: [topicEntry(), topicEntry(), topicEntry()],
+                  childAspectRatio: (5/1),
+                  crossAxisCount: 1,
+                  crossAxisSpacing: 10.0,
+                  mainAxisSpacing: 10.0,
+                  shrinkWrap: true,
               children:
                   topics.map((topic) => topicEntry(document: topic)).toList(),
             ));

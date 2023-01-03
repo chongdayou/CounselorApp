@@ -14,7 +14,7 @@ class topicEntry extends StatelessWidget {
           child: Container(
               height: 150,
               width: MediaQuery.of(context).size.width - 10,
-              padding: const EdgeInsets.all(8.0),
+              // padding: const EdgeInsets.all(8.0),
               child: Card(
                   clipBehavior: Clip.antiAlias,
                   color: Color.fromARGB(164, 163, 204, 220),
@@ -35,6 +35,9 @@ class topicEntry extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(document["title"]),
+                              SizedBox(
+                                height: 20,
+                              ),
                               Text('Tags'),
                             ],
                           ),
