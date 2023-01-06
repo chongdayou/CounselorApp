@@ -21,6 +21,19 @@ class navigationBar extends StatelessWidget {
           label: "profile",
         )
       ],
+      onTap: (int idx) {
+        switch (idx) {
+          case 0: // home
+            Navigator.pushNamed(context, '/home');
+            break;
+          case 1: // for you
+            //do thing
+            break;
+          case 2: // profile
+            Navigator.pushNamed(context, '/profile');
+            break;
+        }
+      },
       // selectedLabelStyle: TextStyle(),
     );
   }
