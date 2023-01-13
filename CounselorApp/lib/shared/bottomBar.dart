@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class navigationBar extends StatelessWidget {
-  const navigationBar({super.key});
+  final int index;
+  const navigationBar({super.key, required this.index});
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      currentIndex: index,
       items: [
         BottomNavigationBarItem(
           icon: Icon(FontAwesomeIcons.home, size: 20),

@@ -56,18 +56,18 @@ class homeScreen extends StatelessWidget {
 
             return Flexible(
                 child: GridView.count(
-                  childAspectRatio: (5/1),
-                  crossAxisCount: 1,
-                  crossAxisSpacing: 10.0,
-                  mainAxisSpacing: 10.0,
-                  shrinkWrap: true,
+              childAspectRatio: (5 / 1),
+              crossAxisCount: 1,
+              crossAxisSpacing: 10.0,
+              mainAxisSpacing: 10.0,
+              shrinkWrap: true,
               children:
                   topics.map((topic) => topicEntry(document: topic)).toList(),
             ));
           },
         ),
       ]),
-      bottomNavigationBar: const navigationBar(),
+      bottomNavigationBar: const navigationBar(index: 0),
     );
   }
 }

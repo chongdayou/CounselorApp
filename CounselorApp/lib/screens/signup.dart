@@ -32,6 +32,9 @@ class _signupState extends State<signupScreen> {
   TextEditingController confirmationController = TextEditingController();
   bool matchingPasswords = false;
 
+  String? dropdownValue = "Student";
+  var items = ["Student", "Employer"];
+
   void checkMatch(String password, String confirm) {
     if (password.isNotEmpty && password == confirm) {
       matchingPasswords = true;
@@ -115,6 +118,24 @@ class _signupState extends State<signupScreen> {
               onChanged: (text) {
                 confirm = text;
                 checkMatch(password, confirm);
+              },
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            DropdownButton(
+              value: dropdownValue,
+              icon: const Icon(Icons.keyboard_arrow_down),
+              items: items.map((String items) {
+                return DropdownMenuItem(
+                  value: items,
+                  child: Text(items),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropdownValue = newValue;
+                });
               },
             ),
             SizedBox(

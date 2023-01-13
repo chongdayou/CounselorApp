@@ -41,6 +41,7 @@ class loginScreen extends StatelessWidget {
             height: 10,
           ),
           TextField(
+            obscureText: true,
             controller: passwordController,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
@@ -57,7 +58,11 @@ class loginScreen extends StatelessWidget {
                 icon: const Icon(FontAwesomeIcons.circleArrowRight),
                 style: TextButton.styleFrom(
                     padding: EdgeInsets.all(50), backgroundColor: Colors.blue),
-                onPressed: () => Auth().logIn(email, password),
+                onPressed: () {
+                  Auth().logIn(email, password);
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('/', (route) => false);
+                },
                 label: const Text("")),
           ),
           SizedBox(

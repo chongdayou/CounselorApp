@@ -2,13 +2,22 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:helloworld/screens/profile.dart';
+import 'package:helloworld/services/services.dart';
 
 class profileGeneralScreen extends StatelessWidget {
   const profileGeneralScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: TextButton(
+          onPressed: () async {
+            await Auth().signOut();
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil('/', (route) => false);
+          },
+          child: const Text("Log Out")),
+    );
   }
 }
 
