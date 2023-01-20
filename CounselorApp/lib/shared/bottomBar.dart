@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:helloworld/services/services.dart';
 
 class navigationBar extends StatelessWidget {
   final int index;
@@ -23,7 +24,7 @@ class navigationBar extends StatelessWidget {
           label: "profile",
         )
       ],
-      onTap: (int idx) {
+      onTap: (int idx) async {
         switch (idx) {
           case 0: // home
             Navigator.pushNamed(context, '/home');
@@ -32,7 +33,15 @@ class navigationBar extends StatelessWidget {
             //do thing
             break;
           case 2: // profile
-            Navigator.pushNamed(context, '/profile');
+            String type = "Employer";
+            // String type = await Auth().getAccountType();
+            // print("Current account page type: ${type}");
+            if (type == "Student") {
+              Navigator.pushNamed(context, '/profileStudent');
+            } else {
+              Navigator.pushNamed(context, '/profileEmployer');
+            }
+
             break;
         }
       },

@@ -5,8 +5,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:helloworld/services/services.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
-class profileScreen extends StatelessWidget {
-  const profileScreen({super.key});
+class profileEmployerScreen extends StatelessWidget {
+  const profileEmployerScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +42,8 @@ class profileScreen extends StatelessWidget {
                       fontSize: 20,
                     ),
                   ),
-                  Text("School, Grade"),
-                  Text("Interests"), //change to a button type thing
+                  Text("Post #"),
+                  Text("Organization"), //change to a button type thing
                 ],
               )
             ],
@@ -62,7 +62,12 @@ class profileScreen extends StatelessWidget {
               child: const Text('Notification')), //notification screen
           // big sizedbox
           user == null
-              ? TextButton(onPressed: () {}, child: const Text("Log In"))
+              ? TextButton(
+                  onPressed: () {
+                    Auth().signOut();
+                    Navigator.pushNamed(context, "/login");
+                  },
+                  child: const Text("Log In"))
               : Container(), // appear if user is not login, otherwise do not appear
         ],
       )),

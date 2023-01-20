@@ -7,10 +7,11 @@ import 'package:helloworld/screens/signup.dart';
 import 'package:helloworld/screens/home.dart';
 import 'package:helloworld/screens/verification.dart';
 import 'package:helloworld/screens/homeScreen.dart';
-import 'package:helloworld/screens/profile.dart';
+import 'package:helloworld/screens/profileStudent.dart';
 import 'package:helloworld/screens/profileGeneral.dart';
 import 'package:helloworld/screens/profileInterest.dart';
 import 'package:helloworld/screens/profileNotification.dart';
+import 'package:helloworld/screens/profileEmployer.dart';
 
 // import 'package:my_app/profile/profile.dart';
 // import 'package:my_app/login/login.dart';
@@ -23,7 +24,8 @@ var screenRoutes = {
   '/signup': (context) => signupScreen(),
   '/verification': (context) => verificationScreen(),
   '/home': (context) => homeScreen(),
-  '/profile': (context) => profileScreen(),
+  '/profileStudent': (context) => profileStudentScreen(),
+  '/profileEmployer': (context) => profileEmployerScreen(),
   '/profileInterest': (context) => profileInterestScreen(),
   '/profileGeneral': (context) => profileGeneralScreen(),
   '/profileNotification': (context) => profileNotificationScreen(),

@@ -1,7 +1,7 @@
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
-import 'package:helloworld/screens/profile.dart';
+import 'package:helloworld/screens/profileStudent.dart';
 import 'package:helloworld/services/services.dart';
 
 class profileGeneralScreen extends StatelessWidget {

@@ -157,7 +157,7 @@ class _signupState extends State<signupScreen> {
                 onPressed: matchingPasswords
                     ? () {
                         print("Attemping sign up");
-                        Auth().accountCreation(email, password);
+                        Auth().accountCreation(email, password, dropdownValue);
                         Auth().verifyEmail();
                         // TODO: redirect to another screen using Navigator
                         Navigator.pushNamed(context, '/verification');
