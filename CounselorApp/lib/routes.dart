@@ -4,14 +4,16 @@
 // import 'package:my_app/about/about.dart';
 import 'package:helloworld/screens/login.dart';
 import 'package:helloworld/screens/signup.dart';
-import 'package:helloworld/screens/home.dart';
+import 'package:helloworld/screens/start.dart';
 import 'package:helloworld/screens/verification.dart';
-import 'package:helloworld/screens/homeScreen.dart';
+import 'package:helloworld/screens/homeScreenStudent.dart';
+import 'package:helloworld/screens/homeScreenCreator.dart';
 import 'package:helloworld/screens/profileStudent.dart';
 import 'package:helloworld/screens/profileGeneral.dart';
 import 'package:helloworld/screens/profileInterest.dart';
 import 'package:helloworld/screens/profileNotification.dart';
-import 'package:helloworld/screens/profileEmployer.dart';
+import 'package:helloworld/screens/profileCreator.dart';
+import 'package:helloworld/screens/createPost.dart';
 
 // import 'package:my_app/profile/profile.dart';
 // import 'package:my_app/login/login.dart';
@@ -23,12 +25,14 @@ var screenRoutes = {
   '/login': (context) => loginScreen(),
   '/signup': (context) => signupScreen(),
   '/verification': (context) => verificationScreen(),
-  '/home': (context) => homeScreen(),
+  '/homeStudent': (context) => homeScreenStudent(),
+  '/homeCreator': (context) => homeScreenCreator(),
   '/profileStudent': (context) => profileStudentScreen(),
-  '/profileEmployer': (context) => profileEmployerScreen(),
+  '/profileCreator': (context) => profileCreatorScreen(),
   '/profileInterest': (context) => profileInterestScreen(),
   '/profileGeneral': (context) => profileGeneralScreen(),
   '/profileNotification': (context) => profileNotificationScreen(),
+  '/createPost': (context) => createPostScreen(),
 };
 // var appRoutes = {
 //   '/': (context) => const HomeScreen(),

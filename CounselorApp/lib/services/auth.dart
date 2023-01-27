@@ -65,8 +65,8 @@ class Auth {
     await FirebaseAuth.instance.signOut();
   }
 
-  Future<void> verifyEmail() async {
-    User? user = FirebaseAuth.instance.currentUser;
+  Future<void> verifyEmail(user) async {
+    // User? user = FirebaseAuth.instance.currentUser;
     if (user != null && !user.emailVerified) {
       print("User was sent an email!");
       await user.sendEmailVerification();

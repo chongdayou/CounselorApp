@@ -5,8 +5,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:sentiment_dart/sentiment_dart.dart';
 import 'package:helloworld/screens/topic.dart';
 
-class homeScreen extends StatelessWidget {
-  homeScreen({super.key});
+class homeScreenCreator extends StatelessWidget {
+  homeScreenCreator({super.key});
   String searchContent = "";
   TextEditingController searchController = TextEditingController();
 
@@ -23,7 +23,7 @@ class homeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    getData();
+    // getData();
     return Scaffold(
       body: Column(children: [
         TextField(
@@ -38,9 +38,9 @@ class homeScreen extends StatelessWidget {
                 backgroundColor: Colors.green,
                 child: Icon(Icons.add),
                 onPressed: () {
-                  FirebaseFirestore.instance
-                      .collection('topics')
-                      .add({'category': 'volunteer'});
+                  // FirebaseFirestore.instance
+                  //     .collection('topics')
+                  //     .add({'category': 'volunteer'});
                 })),
         FutureBuilder(
           future: getData(),

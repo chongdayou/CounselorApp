@@ -5,8 +5,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:helloworld/services/services.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
-class profileEmployerScreen extends StatelessWidget {
-  const profileEmployerScreen({super.key});
+class profileCreatorScreen extends StatelessWidget {
+  const profileCreatorScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

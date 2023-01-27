@@ -33,7 +33,7 @@ class _signupState extends State<signupScreen> {
   bool matchingPasswords = false;
 
   String? dropdownValue = "Student";
-  var items = ["Student", "Employer"];
+  var items = ["Student", "Creator"];
 
   void checkMatch(String password, String confirm) {
     if (password.isNotEmpty && password == confirm) {
@@ -158,7 +158,7 @@ class _signupState extends State<signupScreen> {
                     ? () {
                         print("Attemping sign up");
                         Auth().accountCreation(email, password, dropdownValue);
-                        Auth().verifyEmail();
+                        // Auth().verifyEmail();
                         // TODO: redirect to another screen using Navigator
                         Navigator.pushNamed(context, '/verification');
                       }

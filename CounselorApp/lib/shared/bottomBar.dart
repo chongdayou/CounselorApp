@@ -27,19 +27,26 @@ class navigationBar extends StatelessWidget {
       onTap: (int idx) async {
         switch (idx) {
           case 0: // home
-            Navigator.pushNamed(context, '/home');
+            String type = "Student";
+            // String type = await Auth().getAccountType();
+            // print("Current account page type: ${type}");
+            if (type == "Student") {
+              Navigator.pushNamed(context, '/homeStudent');
+            } else {
+              Navigator.pushNamed(context, '/homeCreator');
+            }
             break;
           case 1: // for you
             //do thing
             break;
           case 2: // profile
-            String type = "Employer";
+            String type = "Student";
             // String type = await Auth().getAccountType();
             // print("Current account page type: ${type}");
             if (type == "Student") {
               Navigator.pushNamed(context, '/profileStudent');
             } else {
-              Navigator.pushNamed(context, '/profileEmployer');
+              Navigator.pushNamed(context, '/profileCreator');
             }
 
             break;
