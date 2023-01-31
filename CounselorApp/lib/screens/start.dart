@@ -7,10 +7,14 @@ import 'package:helloworld/screens/homeScreenStudent.dart';
 import 'package:helloworld/screens/homeScreenCreator.dart';
 import 'package:helloworld/screens/verification.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:helloworld/services/singleton.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 class startScreen extends StatelessWidget {
   startScreen({Key? key}) : super(key: key);
+
+  Singleton _singleton = Singleton();
+
   String searchBar = "";
   TextEditingController searchBarController = TextEditingController();
   @override
@@ -32,6 +36,7 @@ class startScreen extends StatelessWidget {
               return verificationScreen();
             } else {
               // User is already verified
+              print("TESTING");
               final docRef = FirebaseFirestore.instance
                   .collection("user_data")
                   .doc(userData.uid);
@@ -41,9 +46,11 @@ class startScreen extends StatelessWidget {
                   // ...
                   if (data["account_type"] == "Student") {
                     print("STUDENT PAGE");
+                    _singleton.accountType = "Student";
                     return homeScreenStudent();
                   } else {
                     print("CREATOR PAGE");
+                    _singleton.accountType = "Creator";
                     return homeScreenCreator();
                   }
                 },

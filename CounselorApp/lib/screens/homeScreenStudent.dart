@@ -5,9 +5,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:sentiment_dart/sentiment_dart.dart';
 import 'package:helloworld/screens/topic.dart';
 import 'package:helloworld/services/services.dart';
+import 'package:helloworld/services/singleton.dart';
 
 class homeScreenStudent extends StatelessWidget {
   homeScreenStudent({super.key});
+
+  Singleton _singleton = Singleton();
+
   String searchContent = "";
   TextEditingController searchController = TextEditingController();
 
@@ -51,7 +55,7 @@ class homeScreenStudent extends StatelessWidget {
               return Text("loading");
             }
 
-            print("Snapshot has data");
+            print("Snapshot has data for ${_singleton.accountType}");
             // print(Auth().user!.emailVerified);
 
             List<DocumentSnapshot> topics =

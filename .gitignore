@@ -19,3 +19,9 @@ doc/api/
 *.js_
 *.js.deps
 *.js.map
+
+CounselorApp/.flutter-plugins
+
+CounselorApp/.flutter-plugins-dependencies
+
+CounselorApp/android/local.properties
