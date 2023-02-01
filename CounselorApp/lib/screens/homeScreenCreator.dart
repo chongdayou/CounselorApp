@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:helloworld/shared/bottomBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:helloworld/shared/bottomBarCreator.dart';
 import 'package:sentiment_dart/sentiment_dart.dart';
 import 'package:helloworld/screens/topic.dart';
 
@@ -67,7 +68,7 @@ class homeScreenCreator extends StatelessWidget {
           },
         ),
       ]),
-      bottomNavigationBar: const navigationBar(index: 0),
+      bottomNavigationBar: const navigationBarCreator(index: 0),
     );
   }
 }

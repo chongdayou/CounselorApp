@@ -15,6 +15,8 @@ class startScreen extends StatelessWidget {
 
   Singleton _singleton = Singleton();
 
+  bool processed = false;
+
   String searchBar = "";
   TextEditingController searchBarController = TextEditingController();
   @override
@@ -28,9 +30,11 @@ class startScreen extends StatelessWidget {
           return Text(snapshot.error.toString());
         } else {
           if (snapshot.hasData) {
+            processed = false;
             print("User is currently logged in.");
             firebase_auth.User userData = snapshot.data as firebase_auth.User;
-            if (!userData.emailVerified) {
+            // if (!userData.emailVerified) {
+            if (false) {
               // If the user is not yet verified
               Auth().verifyEmail(userData);
               return verificationScreen();
@@ -47,18 +51,24 @@ class startScreen extends StatelessWidget {
                   if (data["account_type"] == "Student") {
                     print("STUDENT PAGE");
                     _singleton.accountType = "Student";
-                    return homeScreenStudent();
+                    //return homeScreenStudent();
                   } else {
                     print("CREATOR PAGE");
                     _singleton.accountType = "Creator";
-                    return homeScreenCreator();
+                    //return homeScreenCreator();
                   }
+                  processed = true;
                 },
                 onError: (e) => print("Error getting document: $e"),
               );
             }
           }
-          return homeScreenStudent(); // replace with default screen
+          // while (!processed) {}
+          if (_singleton.accountType == "Student") {
+            return homeScreenStudent(); // replace with default screen
+          } else {
+            return homeScreenCreator();
+          }
         }
       }),
     );

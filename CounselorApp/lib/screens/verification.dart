@@ -21,7 +21,9 @@ class verificationScreen extends StatelessWidget {
                     mini: true,
                     child: const Icon(Icons.arrow_back_rounded),
                     onPressed: () {
-                      Navigator.pop(context);
+                      //Navigator.pop(context);
+                      Navigator.of(context)
+                          .pushNamedAndRemoveUntil('/', (route) => false);
                     }),
               ),
             ),

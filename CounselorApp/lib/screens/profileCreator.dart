@@ -4,6 +4,7 @@ import 'package:helloworld/shared/bottomBar.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:helloworld/services/services.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:helloworld/shared/bottomBarCreator.dart';
 
 class profileCreatorScreen extends StatelessWidget {
   const profileCreatorScreen({super.key});
@@ -71,7 +72,7 @@ class profileCreatorScreen extends StatelessWidget {
               : Container(), // appear if user is not login, otherwise do not appear
         ],
       )),
-      bottomNavigationBar: const navigationBar(index: 2),
+      bottomNavigationBar: const navigationBarCreator(index: 1),
     );
   }
 }

@@ -1,5 +1,4 @@
 class Singleton {
-
   static final Singleton _instance = Singleton._internal();
 
   // passes the instantiation to the _instance object
