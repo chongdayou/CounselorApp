@@ -74,7 +74,7 @@ class homeScreenStudent extends StatelessWidget {
           },
         ),
       ]),
-      bottomNavigationBar: const navigationBar(index: 0),
+      bottomNavigationBar: navigationBar(index: 0),
     );
   }
 }

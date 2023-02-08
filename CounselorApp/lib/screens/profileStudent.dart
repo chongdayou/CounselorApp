@@ -71,7 +71,7 @@ class profileStudentScreen extends StatelessWidget {
               : Container(), // appear if user is not login, otherwise do not appear
         ],
       )),
-      bottomNavigationBar: const navigationBar(index: 2),
+      bottomNavigationBar: navigationBar(index: 2),
     );
   }
 }

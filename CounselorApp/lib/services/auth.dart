@@ -1,10 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:helloworld/services/singleton.dart';
 
 class Auth {
   final userStream = FirebaseAuth.instance.authStateChanges();
   final user = FirebaseAuth.instance.currentUser;
   String accountType = "Student";
+
+  Singleton _singleton = Singleton();
 
   Future<void> logIn(logIn_username, logIn_password) async {
     try {
@@ -12,7 +15,22 @@ class Auth {
           .signInWithEmailAndPassword(
               email: logIn_username, password: logIn_password);
 
-      // User? user = logInAttempt.user;
+      User? user = logInAttempt.user;
+      var document = FirebaseFirestore.instance
+          .collection("user_data")
+          .doc(user!.uid)
+          .get()
+          .then(
+        (DocumentSnapshot doc) {
+          final data = doc.data() as Map<String, dynamic>;
+          print("Got the save data! Their info is $data");
+          // return data;
+          _singleton.userData = data;
+          _singleton.accountType = data["account_type"];
+        },
+        onError: (e) => print("Error getting document: $e"),
+      );
+
       // var snapshot = await FirebaseFirestore.instance
       //     .collection('user_data')
       //     .doc(user?.uid)

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:helloworld/services/services.dart';
+import 'package:helloworld/services/singleton.dart';
 
 class navigationBar extends StatelessWidget {
   final int index;
-  const navigationBar({super.key, required this.index});
+  navigationBar({super.key, required this.index});
+
+  Singleton _singleton = Singleton();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,12 @@ class navigationBar extends StatelessWidget {
       onTap: (int idx) async {
         switch (idx) {
           case 0: // home
-            Navigator.pushNamed(context, '/homeStudent');
+            if (_singleton.accountType == "Student") {
+              Navigator.pushNamed(context, '/homeStudent');
+            } else {
+              Navigator.pushNamed(context, '/homeCreator');
+            }
+
             break;
           case 1: // for you
             //do thing

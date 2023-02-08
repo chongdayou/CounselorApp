@@ -39,6 +39,7 @@ class homeScreenCreator extends StatelessWidget {
                 backgroundColor: Colors.green,
                 child: Icon(Icons.add),
                 onPressed: () {
+                  Navigator.pushNamed(context, '/createPost');
                   // FirebaseFirestore.instance
                   //     .collection('topics')
                   //     .add({'category': 'volunteer'});
@@ -68,7 +69,7 @@ class homeScreenCreator extends StatelessWidget {
           },
         ),
       ]),
-      bottomNavigationBar: const navigationBarCreator(index: 0),
+      bottomNavigationBar: navigationBarCreator(index: 0),
     );
   }
 }

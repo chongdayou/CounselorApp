@@ -72,7 +72,7 @@ class profileCreatorScreen extends StatelessWidget {
               : Container(), // appear if user is not login, otherwise do not appear
         ],
       )),
-      bottomNavigationBar: const navigationBarCreator(index: 1),
+      bottomNavigationBar: navigationBarCreator(index: 1),
     );
   }
 }

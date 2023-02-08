@@ -12,6 +12,7 @@ class Singleton {
 
   int _myVariable = 0;
   String _accountType = "Student";
+  Map<String, dynamic>? _userData = null;
 
   //short getter for my variable
   int get myVariable => _myVariable;
@@ -24,6 +25,12 @@ class Singleton {
 
   //short setter for account type
   set accountType(String value) => _accountType = value;
+
+  //short getter for my variable
+  Map<String, dynamic>? get userData => _userData;
+
+  //short setter for my variable
+  set userData(Map<String, dynamic>? value) => _userData = value;
 
   void incrementMyVariable() => _myVariable++;
 }
