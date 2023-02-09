@@ -51,7 +51,7 @@ class homeScreenCreator extends StatelessWidget {
               return Text("loading");
             }
 
-            print("Snapshot has data");
+            // print("Snapshot has data");
 
             List<DocumentSnapshot> topics =
                 snapshot.data as List<DocumentSnapshot>;

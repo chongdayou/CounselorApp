@@ -41,21 +41,23 @@ class startScreen extends StatelessWidget {
             } else {
               // User is already verified
               print("TESTING");
+
               final docRef = FirebaseFirestore.instance
                   .collection("user_data")
                   .doc(userData.uid);
               docRef.get().then(
                 (DocumentSnapshot doc) {
                   final data = doc.data() as Map<String, dynamic>;
+                  _singleton.userData = data;
                   // ...
                   if (data["account_type"] == "Student") {
                     print("STUDENT PAGE");
                     _singleton.accountType = "Student";
-                    //return homeScreenStudent();
+                    // return homeScreenStudent();
                   } else {
                     print("CREATOR PAGE");
                     _singleton.accountType = "Creator";
-                    //return homeScreenCreator();
+                    // return homeScreenCreator();
                   }
                   processed = true;
                 },
@@ -63,7 +65,7 @@ class startScreen extends StatelessWidget {
               );
             }
           }
-          // while (!processed) {}
+
           if (_singleton.accountType == "Student") {
             return homeScreenStudent(); // replace with default screen
           } else {

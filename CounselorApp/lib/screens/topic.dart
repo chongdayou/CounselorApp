@@ -5,8 +5,46 @@ class topicEntry extends StatelessWidget {
   final DocumentSnapshot document;
   const topicEntry({super.key, required this.document});
 
+  _buildTagsDisplay(var items) {
+    List<Widget> choices = [];
+
+    for (var item in items) {
+      choices.add(Container(
+        padding: const EdgeInsets.all(2.0),
+        child: ChoiceChip(
+          selectedColor: Colors.grey,
+          label: Text(
+            item,
+            style: TextStyle(color: Colors.black),
+          ),
+          selected: true,
+          onSelected: (value) {},
+          // onSelected: (selected) {
+          //   if (selectedChoices.length == (widget.maxSelection ?? -1) &&
+          //       !selectedChoices.contains(item)) {
+          //     widget.onMaxSelected?.call(selectedChoices);
+          //   } else {
+          //     setState(() {
+          //       selectedChoices.contains(item)
+          //           ? selectedChoices.remove(item)
+          //           : selectedChoices.add(item);
+          //       widget.onSelectionChanged?.call(selectedChoices);
+          //       // print(selectedChoices);
+          //     });
+          //   }
+          // },
+        ),
+      ));
+    }
+
+    return choices;
+  }
+
   @override
   Widget build(BuildContext context) {
+    // for (var item in document["tags"]) {
+    //   print(item);
+    // }
     return Hero(
       tag: document["title"],
       child: Align(
@@ -38,10 +76,12 @@ class topicEntry extends StatelessWidget {
                               SizedBox(
                                 height: 20,
                               ),
-                              Text('Tags'),
+                              Row(
+                                children: _buildTagsDisplay(document["tags"]),
+                              )
                             ],
                           ),
-                          Text('Content Preview'),
+                          Text(document["description"]),
                         ],
                       ))))),
     );
@@ -60,7 +100,7 @@ class TopicScreen extends StatelessWidget {
           color: Colors.black,
         ),
         backgroundColor: Colors.transparent,
-        title: Text("Example",
+        title: Text(document["title"],
             style: TextStyle(color: Colors.black), textAlign: TextAlign.center),
         elevation: 0,
       ),
@@ -88,7 +128,7 @@ class TopicScreen extends StatelessWidget {
               ),
             ),
             child: Text(
-              "description",
+              document["description"],
               style: TextStyle(),
             ),
           ),
@@ -102,17 +142,60 @@ class TopicScreen extends StatelessWidget {
                     width: MediaQuery.of(context).size.width / 2 - 10,
                     height: 70,
                     child: ElevatedButton(
-                        onPressed: () {}, child: const Text('Join'))),
+                        onPressed: () => _dialogBuilder(context, 0),
+                        child: const Text('Join'))),
                 SizedBox(
                     width: MediaQuery.of(context).size.width / 2 - 10,
                     height: 70,
                     child: ElevatedButton(
-                        onPressed: () {}, child: const Text('Contact'))),
+                        onPressed: () => _dialogBuilder(context, 1),
+                        child: const Text('Contact'))),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> _dialogBuilder(BuildContext context, int type) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        if (type == 0) {
+          return AlertDialog(
+            title: const Text('Click on the following link to join!'),
+            content: Text(document["join_link"]),
+            actions: <Widget>[
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text('Done'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        } else {
+          return AlertDialog(
+            title: const Text('Here is how to contact us!'),
+            content: Text(document["contact_link"]),
+            actions: <Widget>[
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text('Done'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        }
+      },
     );
   }
 }
