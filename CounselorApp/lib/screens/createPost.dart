@@ -129,7 +129,16 @@ class _createPostScreen extends State<createPostScreen> {
                           .collection('user_data')
                           .doc(Auth().user!.uid)
                           .update({
-                        "posts": FieldValue.arrayUnion([value.id])
+                        "posts": {
+                          value.id: {
+                            'title': title,
+                            'description': description,
+                            'join_link': joinLink,
+                            'contact_link': contactLink,
+                            'author': Auth().user!.uid,
+                            'tags': selectedReportList,
+                          }
+                        }
                       }).then((value) => Navigator.pop(context));
                     });
                   },

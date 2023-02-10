@@ -5,26 +5,30 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:helloworld/shared/bottomBarCreator.dart';
 import 'package:sentiment_dart/sentiment_dart.dart';
 import 'package:helloworld/screens/topic.dart';
+import 'package:helloworld/services/singleton.dart';
 
 class homeScreenCreator extends StatelessWidget {
   homeScreenCreator({super.key});
   String searchContent = "";
   TextEditingController searchController = TextEditingController();
 
-  CollectionReference _collectionRef =
-      FirebaseFirestore.instance.collection('topics');
+  Singleton _singleton = Singleton();
 
-  Future<List<Object?>> getData() async {
-    // Get docs from collection reference
-    QuerySnapshot querySnapshot = await _collectionRef.get();
+  List<Map<String, dynamic>> getData() {
+    List<Map<String, dynamic>> data = [];
 
-    List<DocumentSnapshot> data = querySnapshot.docs as List<DocumentSnapshot>;
+    _singleton.userData!["posts"].forEach((key, value) {
+      print(key);
+      print(value);
+      data.add(value);
+    });
     return data;
   }
 
   @override
   Widget build(BuildContext context) {
     // getData();
+    List<Map<String, dynamic>> topics = getData();
     return Scaffold(
       body: Column(children: [
         TextField(
@@ -44,30 +48,20 @@ class homeScreenCreator extends StatelessWidget {
                   //     .collection('topics')
                   //     .add({'category': 'volunteer'});
                 })),
-        FutureBuilder(
-          future: getData(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return Text("loading");
-            }
-
-            // print("Snapshot has data");
-
-            List<DocumentSnapshot> topics =
-                snapshot.data as List<DocumentSnapshot>;
-
-            return Flexible(
-                child: GridView.count(
-              childAspectRatio: (5 / 1),
-              crossAxisCount: 1,
-              crossAxisSpacing: 10.0,
-              mainAxisSpacing: 10.0,
-              shrinkWrap: true,
-              children:
-                  topics.map((topic) => topicEntry(document: topic)).toList(),
-            ));
-          },
-        ),
+        Flexible(
+            child: GridView.count(
+          childAspectRatio: (5 / 1),
+          crossAxisCount: 1,
+          crossAxisSpacing: 10.0,
+          mainAxisSpacing: 10.0,
+          shrinkWrap: true,
+          children: topics
+              .map((topic) => creatorEntry(
+                    document: topic,
+                    docId: '',
+                  ))
+              .toList(),
+        ))
       ]),
       bottomNavigationBar: navigationBarCreator(index: 0),
     );

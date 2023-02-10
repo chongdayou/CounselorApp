@@ -1,9 +1,10 @@
 import "package:flutter/material.dart";
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// TOPIC ENTRY FOR STUDENT
 class topicEntry extends StatelessWidget {
   final DocumentSnapshot document;
-  const topicEntry({super.key, required this.document});
+  topicEntry({super.key, required this.document});
 
   _buildTagsDisplay(var items) {
     List<Widget> choices = [];
@@ -73,7 +74,96 @@ class topicEntry extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(document["title"]),
-                              SizedBox(
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: _buildTagsDisplay(document["tags"]),
+                              )
+                            ],
+                          ),
+                          Text(document["description"]),
+                        ],
+                      ))))),
+    );
+  }
+}
+
+// TOPIC ENTRY FOR CREATOR
+class creatorEntry extends StatelessWidget {
+  final String docId;
+  final Map<String, dynamic> document;
+  const creatorEntry({super.key, required this.document, required this.docId});
+
+  _buildTagsDisplay(var items) {
+    List<Widget> choices = [];
+
+    for (var item in items) {
+      choices.add(Container(
+        padding: const EdgeInsets.all(2.0),
+        child: ChoiceChip(
+          selectedColor: Colors.grey,
+          label: Text(
+            item,
+            style: TextStyle(color: Colors.black),
+          ),
+          selected: true,
+          onSelected: (value) {},
+          // onSelected: (selected) {
+          //   if (selectedChoices.length == (widget.maxSelection ?? -1) &&
+          //       !selectedChoices.contains(item)) {
+          //     widget.onMaxSelected?.call(selectedChoices);
+          //   } else {
+          //     setState(() {
+          //       selectedChoices.contains(item)
+          //           ? selectedChoices.remove(item)
+          //           : selectedChoices.add(item);
+          //       widget.onSelectionChanged?.call(selectedChoices);
+          //       // print(selectedChoices);
+          //     });
+          //   }
+          // },
+        ),
+      ));
+    }
+
+    return choices;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // for (var item in document["tags"]) {
+    //   print(item);
+    // }
+    return Hero(
+      tag: document["title"],
+      child: Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+              height: 150,
+              width: MediaQuery.of(context).size.width - 10,
+              // padding: const EdgeInsets.all(8.0),
+              child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  color: Color.fromARGB(164, 163, 204, 220),
+                  child: InkWell(
+                      onTap: () {
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: ((BuildContext context) =>
+                        //         TopicScreen(document: document))));
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(document["title"]),
+                              const SizedBox(
                                 height: 20,
                               ),
                               Row(
