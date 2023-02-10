@@ -6,9 +6,19 @@ import 'package:helloworld/shared/bottomBarCreator.dart';
 import 'package:sentiment_dart/sentiment_dart.dart';
 import 'package:helloworld/screens/topic.dart';
 import 'package:helloworld/services/singleton.dart';
+import 'package:helloworld/services/auth.dart';
 
-class homeScreenCreator extends StatelessWidget {
-  homeScreenCreator({super.key});
+class homeScreenCreator extends StatefulWidget {
+  homeScreenCreator({Key? key}) : super(key: key);
+
+  @override
+  _homeScreenCreator createState() => _homeScreenCreator();
+}
+
+class _homeScreenCreator extends State<homeScreenCreator> {
+  final Stream<QuerySnapshot> _userDataStream =
+      FirebaseFirestore.instance.collection(Auth().user!.uid).snapshots();
+  // homeScreenCreator({super.key});
   String searchContent = "";
   TextEditingController searchController = TextEditingController();
 
@@ -17,53 +27,78 @@ class homeScreenCreator extends StatelessWidget {
   List<Map<String, dynamic>> getData() {
     List<Map<String, dynamic>> data = [];
 
-    _singleton.userData!["posts"].forEach((key, value) {
-      print(key);
-      print(value);
-      data.add(value);
-    });
+    if (_singleton.userData!.containsKey("posts")) {
+      _singleton.userData!["posts"].forEach((key, value) {
+        print(key);
+        print(value);
+        data.add(value);
+      });
+    }
+
     return data;
   }
 
   @override
   Widget build(BuildContext context) {
     // getData();
-    List<Map<String, dynamic>> topics = getData();
-    return Scaffold(
-      body: Column(children: [
-        TextField(
-          controller: searchController,
-          decoration: InputDecoration(
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
-              labelText: 'Search'),
-        ),
-        Center(
-            child: FloatingActionButton(
-                backgroundColor: Colors.green,
-                child: Icon(Icons.add),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/createPost');
-                  // FirebaseFirestore.instance
-                  //     .collection('topics')
-                  //     .add({'category': 'volunteer'});
-                })),
-        Flexible(
-            child: GridView.count(
-          childAspectRatio: (5 / 1),
-          crossAxisCount: 1,
-          crossAxisSpacing: 10.0,
-          mainAxisSpacing: 10.0,
-          shrinkWrap: true,
-          children: topics
-              .map((topic) => creatorEntry(
-                    document: topic,
-                    docId: '',
-                  ))
-              .toList(),
-        ))
-      ]),
-      bottomNavigationBar: navigationBarCreator(index: 0),
-    );
+    return StreamBuilder<QuerySnapshot>(
+        stream: _userDataStream,
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("Loading");
+          }
+
+          print("CREATOR'S USER DATA HAS CHANGED!");
+
+          snapshot.data!.docs.map((DocumentSnapshot document) {
+            Map<String, dynamic> data =
+                document.data()! as Map<String, dynamic>;
+            _singleton.userData = data;
+          });
+
+          List<Map<String, dynamic>> topics = getData();
+          return Scaffold(
+            body: Column(children: [
+              TextField(
+                controller: searchController,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30)),
+                    labelText: 'Search'),
+              ),
+              Center(
+                  child: FloatingActionButton(
+                      backgroundColor: Colors.green,
+                      child: Icon(Icons.add),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/createPost');
+                        // FirebaseFirestore.instance
+                        //     .collection('topics')
+                        //     .add({'category': 'volunteer'});
+                      })),
+              (topics.isNotEmpty)
+                  ? Flexible(
+                      child: GridView.count(
+                      childAspectRatio: (5 / 1),
+                      crossAxisCount: 1,
+                      crossAxisSpacing: 10.0,
+                      mainAxisSpacing: 10.0,
+                      shrinkWrap: true,
+                      children: topics
+                          .map((topic) => creatorEntry(
+                                document: topic,
+                                docId: '',
+                              ))
+                          .toList(),
+                    ))
+                  : Container(),
+            ]),
+            bottomNavigationBar: navigationBarCreator(index: 0),
+          );
+        });
   }
 }

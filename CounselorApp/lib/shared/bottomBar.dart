@@ -32,7 +32,7 @@ class navigationBar extends StatelessWidget {
           case 0: // home
             if (_singleton.accountType == "Student") {
               Navigator.pushNamed(context, '/homeStudent');
-            } else {
+            } else if (_singleton.userData != null) {
               Navigator.pushNamed(context, '/homeCreator');
             }
 
