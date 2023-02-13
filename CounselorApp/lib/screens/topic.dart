@@ -1,5 +1,8 @@
 import "package:flutter/material.dart";
+import 'package:helloworld/services/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:helloworld/services/singleton.dart';
 
 // TOPIC ENTRY FOR STUDENT
 class topicEntry extends StatelessWidget {
@@ -68,21 +71,45 @@ class topicEntry extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(document["title"]),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                children: _buildTagsDisplay(document["tags"]),
-                              )
-                            ],
+                          Container(
+                            width: 250,
+                            height: 250,
+                            // color: Colors.grey,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  document["title"],
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Wrap(
+                                  children: _buildTagsDisplay(document["tags"]),
+                                ),
+                                // Row(
+                                //   mainAxisAlignment: MainAxisAlignment.center,
+                                //   children: _buildTagsDisplay(document["tags"]),
+                                // )
+                              ],
+                            ),
                           ),
-                          Text(document["description"]),
+                          Container(
+                            width: 250,
+                            height: 250,
+                            color: Colors.grey,
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                document["description"],
+                                maxLines: 5,
+                              ),
+                            ),
+                          )
                         ],
                       ))))),
     );
@@ -91,9 +118,10 @@ class topicEntry extends StatelessWidget {
 
 // TOPIC ENTRY FOR CREATOR
 class creatorEntry extends StatelessWidget {
-  final String docId;
   final Map<String, dynamic> document;
-  const creatorEntry({super.key, required this.document, required this.docId});
+  creatorEntry({super.key, required this.document});
+
+  final Singleton _singleton = Singleton();
 
   _buildTagsDisplay(var items) {
     List<Widget> choices = [];
@@ -157,21 +185,83 @@ class creatorEntry extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(document["title"]),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                children: _buildTagsDisplay(document["tags"]),
-                              )
-                            ],
+                          Container(
+                            width: 250,
+                            height: 250,
+                            // color: Colors.grey,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(document["title"]),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Wrap(
+                                  children: _buildTagsDisplay(document["tags"]),
+                                ),
+                                // Row(
+                                //   mainAxisAlignment: MainAxisAlignment.center,
+                                //   children: _buildTagsDisplay(document["tags"]),
+                                // )
+                              ],
+                            ),
                           ),
-                          Text(document["description"]),
+                          Container(
+                            width: 250,
+                            height: 250,
+                            color: Colors.grey,
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                document["description"],
+                                maxLines: 5,
+                              ),
+                            ),
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ElevatedButton.icon(
+                                  icon:
+                                      const Icon(FontAwesomeIcons.penToSquare),
+                                  style: TextButton.styleFrom(
+                                      padding: EdgeInsets.all(25),
+                                      backgroundColor: Colors.blue),
+                                  onPressed: () {
+                                    _singleton.currentDocument = document;
+                                    Navigator.pushNamed(context, '/createPost');
+                                  },
+                                  label: const Text("")),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              ElevatedButton.icon(
+                                  icon: const Icon(FontAwesomeIcons.trash),
+                                  style: TextButton.styleFrom(
+                                      padding: EdgeInsets.all(25),
+                                      backgroundColor: Colors.blue),
+                                  onPressed: () {
+                                    final userRef = FirebaseFirestore.instance
+                                        .collection('user_data')
+                                        .doc(Auth().user!.uid);
+
+                                    final updates = <String, dynamic>{
+                                      "posts.${document["doc_id"]}":
+                                          FieldValue.delete(),
+                                    };
+
+                                    userRef.update(updates);
+                                    FirebaseFirestore.instance
+                                        .collection('topics')
+                                        .doc(document["doc_id"])
+                                        .delete();
+                                  },
+                                  label: const Text("")),
+                            ],
+                          )
                         ],
                       ))))),
     );

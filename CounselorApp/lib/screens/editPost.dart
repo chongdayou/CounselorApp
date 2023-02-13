@@ -1,20 +1,18 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:helloworld/services/services.dart';
 import 'package:helloworld/services/singleton.dart';
 
-class createPostScreen extends StatefulWidget {
-  createPostScreen({Key? key}) : super(key: key);
+class EditPostScreen extends StatefulWidget {
+  EditPostScreen({Key? key}) : super(key: key);
 
   // final String title;
 
   @override
-  _createPostScreen createState() => _createPostScreen();
+  _EditPostScreen createState() => _EditPostScreen();
 }
 
-class _createPostScreen extends State<createPostScreen> {
+class _EditPostScreen extends State<EditPostScreen> {
   String title = '';
   TextEditingController titleController = TextEditingController();
   String description = '';
@@ -23,8 +21,6 @@ class _createPostScreen extends State<createPostScreen> {
   TextEditingController joinLinkController = TextEditingController();
   String contactLink = '';
   TextEditingController contactLinkController = TextEditingController();
-
-  final Singleton _singleton = Singleton();
 
   List<String> reportList = [
     "internship",
@@ -37,18 +33,6 @@ class _createPostScreen extends State<createPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (_singleton.currentDocument != null) {
-      titleController.text = _singleton.currentDocument!["title"];
-      title = titleController.text;
-      descriptionController.text = _singleton.currentDocument!["description"];
-      description = descriptionController.text;
-      joinLinkController.text = _singleton.currentDocument!["join_link"];
-      joinLink = joinLinkController.text;
-      contactLinkController.text = _singleton.currentDocument!["contact_link"];
-      contactLink = contactLinkController.text;
-      print("Testing: ${_singleton.currentDocument!["doc_id"]}");
-    }
-
     return Scaffold(
       body: Container(
         child: Column(
@@ -126,67 +110,35 @@ class _createPostScreen extends State<createPostScreen> {
                 width: MediaQuery.of(context).size.width / 2 - 10,
                 height: 70,
                 child: ElevatedButton(
+                  child: Text('Publish'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
                   ),
                   onPressed: () {
-                    if (_singleton.currentDocument == null) {
-                      FirebaseFirestore.instance.collection('topics').add({
-                        'title': title,
-                        'description': description,
-                        'join_link': joinLink,
-                        'contact_link': contactLink,
-                        'author': Auth().user!.uid,
-                        'tags': selectedReportList,
-                      }).then((value) {
-                        // print(value.id);
-                        FirebaseFirestore.instance
-                            .collection('user_data')
-                            .doc(Auth().user!.uid)
-                            .update({
-                          "posts.${value.id}": {
-                            'title': title,
-                            'description': description,
-                            'join_link': joinLink,
-                            'contact_link': contactLink,
-                            'author': Auth().user!.uid,
-                            'tags': selectedReportList,
-                          }
-                        }).then((value) => Navigator.pop(context));
-                      });
-                    } else {
+                    FirebaseFirestore.instance.collection('topics').add({
+                      'title': title,
+                      'description': description,
+                      'join_link': joinLink,
+                      'contact_link': contactLink,
+                      'author': Auth().user!.uid,
+                      'tags': selectedReportList,
+                    }).then((value) {
+                      // print(value.id);
                       FirebaseFirestore.instance
-                          .collection('topics')
-                          .doc(_singleton.currentDocument!["doc_id"])
+                          .collection('user_data')
+                          .doc(Auth().user!.uid)
                           .update({
-                        'title': title,
-                        'description': description,
-                        'join_link': joinLink,
-                        'contact_link': contactLink,
-                        'author': Auth().user!.uid,
-                        'tags': selectedReportList,
-                      }).then((value) {
-                        print(_singleton.currentDocument);
-                        FirebaseFirestore.instance
-                            .collection('user_data')
-                            .doc(Auth().user!.uid)
-                            .update({
-                          "posts.${_singleton.currentDocument!["doc_id"]}": {
-                            'title': title,
-                            'description': description,
-                            'join_link': joinLink,
-                            'contact_link': contactLink,
-                            'author': Auth().user!.uid,
-                            'tags': selectedReportList,
-                          }
-                        }).then((value) {
-                          _singleton.currentDocument = null;
-                          Navigator.pop(context);
-                        });
-                      });
-                    }
+                        "posts.${value.id}": {
+                          'title': title,
+                          'description': description,
+                          'join_link': joinLink,
+                          'contact_link': contactLink,
+                          'author': Auth().user!.uid,
+                          'tags': selectedReportList,
+                        }
+                      }).then((value) => Navigator.pop(context));
+                    });
                   },
-                  child: const Text('Publish'),
                 )),
             // SizedBox(
             //         width: MediaQuery.of(context).size.width / 2 - 10,
@@ -203,7 +155,6 @@ class _createPostScreen extends State<createPostScreen> {
                     backgroundColor: Colors.blue,
                   ),
                   onPressed: () {
-                    _singleton.currentDocument = null;
                     Navigator.pop(context);
                   },
                 )),

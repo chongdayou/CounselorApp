@@ -6,6 +6,7 @@ import 'package:sentiment_dart/sentiment_dart.dart';
 import 'package:helloworld/screens/topic.dart';
 import 'package:helloworld/services/services.dart';
 import 'package:helloworld/services/singleton.dart';
+import 'package:helloworld/shared/loading.dart';
 
 class homeScreenStudent extends StatelessWidget {
   homeScreenStudent({super.key});
@@ -31,23 +32,13 @@ class homeScreenStudent extends StatelessWidget {
     // getData();
     return Scaffold(
       body: Column(children: [
-        TextField(
-          controller: searchController,
-          decoration: InputDecoration(
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
-              labelText: 'Search'),
-        ),
-        // Center(
-        //     child: FloatingActionButton(
-        //         backgroundColor: Colors.green,
-        //         child: Icon(Icons.add),
-        //         onPressed: () {
-        //           // FirebaseFirestore.instance
-        //           //     .collection('topics')
-        //           //     .add({'category': 'volunteer'});
-
-        //         })),
+        // TextField(
+        //   controller: searchController,
+        //   decoration: InputDecoration(
+        //       border:
+        //           OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+        //       labelText: 'Search'),
+        // ),
         FutureBuilder(
           future: getData(),
           builder: (context, snapshot) {

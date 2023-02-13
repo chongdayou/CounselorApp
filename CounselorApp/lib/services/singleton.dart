@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Singleton {
   static final Singleton _instance = Singleton._internal();
 
@@ -12,7 +14,8 @@ class Singleton {
 
   int _myVariable = 0;
   String _accountType = "Student";
-  Map<String, dynamic>? _userData = null;
+  Map<String, dynamic>? _userData;
+  Map<String, dynamic>? _currentDocument;
 
   //short getter for my variable
   int get myVariable => _myVariable;
@@ -26,11 +29,17 @@ class Singleton {
   //short setter for account type
   set accountType(String value) => _accountType = value;
 
-  //short getter for my variable
+  //short getter for userData
   Map<String, dynamic>? get userData => _userData;
 
-  //short setter for my variable
+  //short setter for userData
   set userData(Map<String, dynamic>? value) => _userData = value;
+
+  //short getter for my variable
+  Map<String, dynamic>? get currentDocument => _currentDocument;
+
+  //short setter for my variable
+  set currentDocument(Map<String, dynamic>? value) => _currentDocument = value;
 
   void incrementMyVariable() => _myVariable++;
 }

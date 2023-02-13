@@ -7,6 +7,7 @@ import 'package:sentiment_dart/sentiment_dart.dart';
 import 'package:helloworld/screens/topic.dart';
 import 'package:helloworld/services/singleton.dart';
 import 'package:helloworld/services/auth.dart';
+import 'package:helloworld/shared/loading.dart';
 
 class homeScreenCreator extends StatefulWidget {
   homeScreenCreator({Key? key}) : super(key: key);
@@ -22,15 +23,16 @@ class _homeScreenCreator extends State<homeScreenCreator> {
   String searchContent = "";
   TextEditingController searchController = TextEditingController();
 
-  Singleton _singleton = Singleton();
+  final Singleton _singleton = Singleton();
 
   List<Map<String, dynamic>> getData() {
     List<Map<String, dynamic>> data = [];
 
     if (_singleton.userData!.containsKey("posts")) {
       _singleton.userData!["posts"].forEach((key, value) {
-        print(key);
-        print(value);
+        // print(key);
+        value["doc_id"] = key;
+        // print(value);
         data.add(value);
       });
     }
@@ -45,60 +47,63 @@ class _homeScreenCreator extends State<homeScreenCreator> {
         stream: _userDataStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
-            return Text('Something went wrong');
+            return const Text('Something went wrong');
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading");
+            return const LoadingScreen();
           }
 
-          print("CREATOR'S USER DATA HAS CHANGED!");
+          // print("CREATOR'S USER DATA HAS CHANGED!");
 
-          snapshot.data!.docs.map((DocumentSnapshot document) {
-            Map<String, dynamic> data =
-                document.data()! as Map<String, dynamic>;
-            _singleton.userData = data;
-          });
+          if (snapshot.hasData) {
+            snapshot.data!.docs.map((DocumentSnapshot document) {
+              Map<String, dynamic> data =
+                  document.data()! as Map<String, dynamic>;
+              _singleton.userData = data;
+            });
 
-          List<Map<String, dynamic>> topics = getData();
-          return Scaffold(
-            body: Column(children: [
-              TextField(
-                controller: searchController,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30)),
-                    labelText: 'Search'),
-              ),
-              Center(
-                  child: FloatingActionButton(
-                      backgroundColor: Colors.green,
-                      child: Icon(Icons.add),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/createPost');
-                        // FirebaseFirestore.instance
-                        //     .collection('topics')
-                        //     .add({'category': 'volunteer'});
-                      })),
-              (topics.isNotEmpty)
-                  ? Flexible(
-                      child: GridView.count(
-                      childAspectRatio: (5 / 1),
-                      crossAxisCount: 1,
-                      crossAxisSpacing: 10.0,
-                      mainAxisSpacing: 10.0,
-                      shrinkWrap: true,
-                      children: topics
-                          .map((topic) => creatorEntry(
-                                document: topic,
-                                docId: '',
-                              ))
-                          .toList(),
-                    ))
-                  : Container(),
-            ]),
-            bottomNavigationBar: navigationBarCreator(index: 0),
-          );
+            List<Map<String, dynamic>> topics = getData();
+            return Scaffold(
+              body: Column(children: [
+                // TextField(
+                //   controller: searchController,
+                //   decoration: InputDecoration(
+                //       border: OutlineInputBorder(
+                //           borderRadius: BorderRadius.circular(30)),
+                //       labelText: 'Search'),
+                // ),
+                Center(
+                    child: FloatingActionButton(
+                        backgroundColor: Colors.green,
+                        child: Icon(Icons.add),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/createPost');
+                          // FirebaseFirestore.instance
+                          //     .collection('topics')
+                          //     .add({'category': 'volunteer'});
+                        })),
+                (topics.isNotEmpty)
+                    ? Flexible(
+                        child: GridView.count(
+                        childAspectRatio: (5 / 1),
+                        crossAxisCount: 1,
+                        crossAxisSpacing: 10.0,
+                        mainAxisSpacing: 10.0,
+                        shrinkWrap: true,
+                        children: topics
+                            .map((topic) => creatorEntry(
+                                  document: topic,
+                                ))
+                            .toList(),
+                      ))
+                    : Container(),
+              ]),
+              bottomNavigationBar: navigationBarCreator(index: 0),
+            );
+          } else {
+            return const LoadingScreen();
+          }
         });
   }
 }

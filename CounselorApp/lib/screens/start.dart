@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:helloworld/screens/login.dart';
-import 'package:helloworld/screens/signup.dart';
+import 'package:helloworld/shared/loading.dart';
 import 'package:helloworld/services/services.dart';
 import 'package:helloworld/screens/homeScreenStudent.dart';
 import 'package:helloworld/screens/homeScreenCreator.dart';
+import 'package:helloworld/screens/initialization.dart';
 import 'package:helloworld/screens/verification.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:helloworld/services/singleton.dart';
@@ -15,8 +15,6 @@ class startScreen extends StatelessWidget {
 
   Singleton _singleton = Singleton();
 
-  bool processed = false;
-
   String searchBar = "";
   TextEditingController searchBarController = TextEditingController();
   @override
@@ -25,12 +23,11 @@ class startScreen extends StatelessWidget {
       stream: Auth().userStream,
       builder: ((context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("loading");
+          return const LoadingScreen();
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         } else {
           if (snapshot.hasData) {
-            processed = false;
             print("User is currently logged in.");
             firebase_auth.User userData = snapshot.data as firebase_auth.User;
             // if (!userData.emailVerified) {
@@ -42,35 +39,35 @@ class startScreen extends StatelessWidget {
               // User is already verified
               print("TESTING");
 
-              final docRef = FirebaseFirestore.instance
-                  .collection("user_data")
-                  .doc(userData.uid);
-              docRef.get().then(
-                (DocumentSnapshot doc) {
-                  final data = doc.data() as Map<String, dynamic>;
-                  _singleton.userData = data;
-                  // ...
-                  if (data["account_type"] == "Student") {
-                    print("STUDENT PAGE");
-                    _singleton.accountType = "Student";
-                    // return homeScreenStudent();
-                  } else {
-                    print("CREATOR PAGE");
-                    _singleton.accountType = "Creator";
-                    // return homeScreenCreator();
-                  }
-                  processed = true;
-                },
-                onError: (e) => print("Error getting document: $e"),
-              );
+              // final docRef = FirebaseFirestore.instance
+              //     .collection("user_data")
+              //     .doc(userData.uid);
+              // docRef.get().then(
+              //   (DocumentSnapshot doc) {
+              //     final data = doc.data() as Map<String, dynamic>;
+              //     _singleton.userData = data;
+              //     // ...
+              //     if (data["account_type"] == "Student") {
+              //       print("STUDENT PAGE");
+              //       _singleton.accountType = "Student";
+              //       // return homeScreenStudent();
+              //     } else {
+              //       print("CREATOR PAGE");
+              //       _singleton.accountType = "Creator";
+              //       // return homeScreenCreator();
+              //     }
+              //   },
+              //   onError: (e) => print("Error getting document: $e"),
+              // );
             }
           }
 
-          if (_singleton.accountType == "Student") {
-            return homeScreenStudent(); // replace with default screen
-          } else {
-            return homeScreenCreator();
-          }
+          // if (_singleton.accountType == "Student") {
+          //   return homeScreenStudent(); // replace with default screen
+          // } else {
+          //   return homeScreenCreator();
+          // }
+          return InitializationScreen();
         }
       }),
     );

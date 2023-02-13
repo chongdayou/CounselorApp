@@ -38,10 +38,17 @@ class navigationBar extends StatelessWidget {
 
             break;
           case 1: // for you
-            //do thing
+            if (Auth().user == null) {
+              Navigator.pushNamed(context, '/unsignedScreen');
+            }
             break;
           case 2: // profile
-            Navigator.pushNamed(context, '/profileStudent');
+            if (Auth().user == null) {
+              Navigator.pushNamed(context, '/unsignedScreen');
+            } else {
+              Navigator.pushNamed(context, '/profileStudent');
+            }
+
             break;
         }
       },

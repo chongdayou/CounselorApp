@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
             routes: screenRoutes,
           );
         }
-        return Text('testing');
+        return Container();
       },
     );
   }

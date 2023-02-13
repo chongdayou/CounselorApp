@@ -22,7 +22,7 @@ class profileStudentScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
-            height: 0, //mediaquery
+            height: 30, //mediaquery
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -31,7 +31,7 @@ class profileStudentScreen extends StatelessWidget {
               Image.asset(
                 'assets/default.png', // 'assets/${filename}',
                 fit: BoxFit.contain,
-                scale: 15,
+                scale: 5,
               ),
               Column(
                 // sizedbox between each thing
@@ -39,11 +39,17 @@ class profileStudentScreen extends StatelessWidget {
                   Text(
                     email,
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 40,
                     ),
                   ),
-                  Text("School, Grade"),
-                  Text("Interests"), //change to a button type thing
+                  Text(
+                    "School, Grade",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Text(
+                    "Interests",
+                    style: TextStyle(fontSize: 20),
+                  ), //change to a button type thing
                 ],
               )
             ],
@@ -51,15 +57,23 @@ class profileStudentScreen extends StatelessWidget {
           SizedBox(
             height: 0,
           ),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/profileGeneral');
-              },
-              child: const Text('General')), //general screen
+          SizedBox(
+            width: MediaQuery.of(context).size.width / 2 - 10,
+            height: 50,
+            child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/profileGeneral');
+                },
+                child: const Text(
+                  'General',
+                  style: TextStyle(fontSize: 30),
+                )), //general screen,
+          ),
+
           //sizedbox
-          ElevatedButton(
-              onPressed: () {},
-              child: const Text('Notification')), //notification screen
+          // ElevatedButton(
+          //     onPressed: () {},
+          //     child: const Text('Notification')), //notification screen
           // big sizedbox
           user == null
               ? TextButton(
