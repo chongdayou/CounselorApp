@@ -107,7 +107,7 @@ class topicEntry extends StatelessWidget {
                               padding: EdgeInsets.all(8.0),
                               child: Text(
                                 document["description"],
-                                maxLines: 5,
+                                maxLines: 9,
                               ),
                             ),
                           )
@@ -221,7 +221,7 @@ class creatorEntry extends StatelessWidget {
                               padding: EdgeInsets.all(8.0),
                               child: Text(
                                 document["description"],
-                                maxLines: 5,
+                                maxLines: 9,
                               ),
                             ),
                           ),
@@ -263,7 +263,11 @@ class creatorEntry extends StatelessWidget {
                                     FirebaseFirestore.instance
                                         .collection('topics')
                                         .doc(document["doc_id"])
-                                        .delete();
+                                        .delete()
+                                        .then(
+                                          (value) => Navigator.pushNamed(
+                                              context, '/homeCreator'),
+                                        );
                                   },
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.red.shade400),

@@ -1,5 +1,4 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:helloworld/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:helloworld/services/services.dart';
@@ -37,7 +36,7 @@ class _createPostScreen extends State<createPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (_singleton.currentDocument != null) {
+    if (_singleton.currentDocument != null && !_singleton.editDirty) {
       titleController.text = _singleton.currentDocument!["title"];
       title = titleController.text;
       descriptionController.text = _singleton.currentDocument!["description"];
@@ -50,165 +49,174 @@ class _createPostScreen extends State<createPostScreen> {
     }
 
     return Scaffold(
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            TextField(
-              controller: titleController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Title: ',
-              ),
-              onChanged: (text) {
-                title = text;
-              },
+      resizeToAvoidBottomInset: false,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          SizedBox(
+            height: SizeConfig.blockSizeVertical! * 5,
+          ),
+          TextField(
+            controller: titleController,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Title',
             ),
-            TextField(
-              maxLines: 10,
-              controller: descriptionController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Description',
-              ),
-              onChanged: (text) {
-                description = text;
-              },
+            onChanged: (text) {
+              _singleton.editDirty = true;
+              title = text;
+            },
+          ),
+          TextField(
+            maxLines: 10,
+            controller: descriptionController,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Description',
             ),
-            TextField(
-              controller: joinLinkController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Join Link',
-              ),
-              onChanged: (text) {
-                joinLink = text;
-              },
+            onChanged: (text) {
+              _singleton.editDirty = true;
+              description = text;
+            },
+          ),
+          TextField(
+            controller: joinLinkController,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Join Link',
             ),
-            TextField(
-              controller: contactLinkController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Contact Link',
-              ),
-              onChanged: (text) {
-                contactLink = text;
-              },
+            onChanged: (text) {
+              _singleton.editDirty = true;
+              joinLink = text;
+            },
+          ),
+          TextField(
+            controller: contactLinkController,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Contact Link',
             ),
-            OutlinedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                minimumSize: Size(MediaQuery.of(context).size.width + 10, 50),
-              ),
-              onPressed: () {},
-              child: Column(
-                children: [
-                  const Text(
-                    "Tags:",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  MultiSelectChip(
-                    reportList,
-                    onSelectionChanged: (selectedList) {
-                      setState(() {
-                        selectedReportList = selectedList;
-                      });
-                    },
-                    maxSelection: 5,
-                  )
-                ],
-              ),
+            onChanged: (text) {
+              _singleton.editDirty = true;
+              contactLink = text;
+            },
+          ),
+          OutlinedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              minimumSize: Size(MediaQuery.of(context).size.width + 10, 50),
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 6,
+            onPressed: () {},
+            child: Column(
+              children: [
+                const Text(
+                  "Tags:",
+                  style: TextStyle(color: Colors.black),
+                ),
+                MultiSelectChip(
+                  reportList,
+                  onSelectionChanged: (selectedList) {
+                    setState(() {
+                      selectedReportList = selectedList;
+                    });
+                  },
+                  maxSelection: 5,
+                )
+              ],
             ),
-            SizedBox(
-                width: MediaQuery.of(context).size.width / 2 - 10,
-                height: 70,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                  ),
-                  onPressed: () {
-                    if (_singleton.currentDocument == null) {
-                      FirebaseFirestore.instance.collection('topics').add({
-                        'title': title,
-                        'description': description,
-                        'join_link': joinLink,
-                        'contact_link': contactLink,
-                        'author': Auth().user!.uid,
-                        'tags': selectedReportList,
-                      }).then((value) {
-                        // print(value.id);
-                        FirebaseFirestore.instance
-                            .collection('user_data')
-                            .doc(Auth().user!.uid)
-                            .update({
-                          "posts.${value.id}": {
-                            'title': title,
-                            'description': description,
-                            'join_link': joinLink,
-                            'contact_link': contactLink,
-                            'author': Auth().user!.uid,
-                            'tags': selectedReportList,
-                          }
-                        }).then((value) => Navigator.pop(context));
-                      });
-                    } else {
+          ),
+          // SizedBox(
+          //   height: MediaQuery.of(context).size.height / 6,
+          // ),
+          SizedBox(
+              width: SizeConfig.blockSizeHorizontal! * 95,
+              height: 70,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                ),
+                onPressed: () {
+                  _singleton.editDirty = false;
+                  if (_singleton.currentDocument == null) {
+                    FirebaseFirestore.instance.collection('topics').add({
+                      'title': title,
+                      'description': description,
+                      'join_link': joinLink,
+                      'contact_link': contactLink,
+                      'author': Auth().user!.uid,
+                      'tags': selectedReportList,
+                    }).then((value) {
+                      // print(value.id);
                       FirebaseFirestore.instance
-                          .collection('topics')
-                          .doc(_singleton.currentDocument!["doc_id"])
+                          .collection('user_data')
+                          .doc(Auth().user!.uid)
                           .update({
-                        'title': title,
-                        'description': description,
-                        'join_link': joinLink,
-                        'contact_link': contactLink,
-                        'author': Auth().user!.uid,
-                        'tags': selectedReportList,
+                        "posts.${value.id}": {
+                          'title': title,
+                          'description': description,
+                          'join_link': joinLink,
+                          'contact_link': contactLink,
+                          'author': Auth().user!.uid,
+                          'tags': selectedReportList,
+                        }
+                      }).then((value) =>
+                              Navigator.pushNamed(context, '/homeCreator'));
+                    });
+                  } else {
+                    FirebaseFirestore.instance
+                        .collection('topics')
+                        .doc(_singleton.currentDocument!["doc_id"])
+                        .update({
+                      'title': title,
+                      'description': description,
+                      'join_link': joinLink,
+                      'contact_link': contactLink,
+                      'author': Auth().user!.uid,
+                      'tags': selectedReportList,
+                    }).then((value) {
+                      // print(_singleton.currentDocument);
+                      FirebaseFirestore.instance
+                          .collection('user_data')
+                          .doc(Auth().user!.uid)
+                          .update({
+                        "posts.${_singleton.currentDocument!["doc_id"]}": {
+                          'title': title,
+                          'description': description,
+                          'join_link': joinLink,
+                          'contact_link': contactLink,
+                          'author': Auth().user!.uid,
+                          'tags': selectedReportList,
+                        }
                       }).then((value) {
-                        print(_singleton.currentDocument);
-                        FirebaseFirestore.instance
-                            .collection('user_data')
-                            .doc(Auth().user!.uid)
-                            .update({
-                          "posts.${_singleton.currentDocument!["doc_id"]}": {
-                            'title': title,
-                            'description': description,
-                            'join_link': joinLink,
-                            'contact_link': contactLink,
-                            'author': Auth().user!.uid,
-                            'tags': selectedReportList,
-                          }
-                        }).then((value) {
-                          _singleton.currentDocument = null;
-                          Navigator.pop(context);
-                        });
+                        _singleton.currentDocument = null;
+                        Navigator.pushNamed(context, '/homeCreator');
                       });
-                    }
-                  },
-                  child: const Text('Publish'),
-                )),
-            // SizedBox(
-            //         width: MediaQuery.of(context).size.width / 2 - 10,
-            //         height: 70,
-            //         child: ElevatedButton(
-            //             onPressed: () => _dialogBuilder(context, 0),
-            //             child: const Text('Join'))),
-            SizedBox(
-                width: MediaQuery.of(context).size.width / 2 - 10,
-                height: 70,
-                child: ElevatedButton(
-                  child: Text('Exit'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                  ),
-                  onPressed: () {
-                    _singleton.currentDocument = null;
-                    Navigator.pop(context);
-                  },
-                )),
-          ],
-        ),
+                    });
+                  }
+                },
+                child: const Text('Publish'),
+              )),
+          // SizedBox(
+          //         width: MediaQuery.of(context).size.width / 2 - 10,
+          //         height: 70,
+          //         child: ElevatedButton(
+          //             onPressed: () => _dialogBuilder(context, 0),
+          //             child: const Text('Join'))),
+          SizedBox(
+              width: SizeConfig.blockSizeHorizontal! * 95,
+              height: 70,
+              child: ElevatedButton(
+                child: const Text('Exit'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red.shade400,
+                ),
+                onPressed: () {
+                  _singleton.editDirty = false;
+                  _singleton.currentDocument = null;
+                  Navigator.pop(context);
+                },
+              )),
+        ],
       ),
     );
   }
@@ -231,8 +239,16 @@ class _MultiSelectChipState extends State<MultiSelectChip> {
   // String selectedChoice = "";
   List<String> selectedChoices = [];
 
+  final Singleton _singleton = Singleton();
+
   _buildChoiceList() {
     List<Widget> choices = [];
+
+    if (_singleton.currentDocument != null && !_singleton.editDirty) {
+      for (String item in _singleton.currentDocument!["tags"]) {
+        selectedChoices.add(item);
+      }
+    }
 
     for (var item in widget.reportList) {
       choices.add(Container(
@@ -247,6 +263,7 @@ class _MultiSelectChipState extends State<MultiSelectChip> {
               widget.onMaxSelected?.call(selectedChoices);
             } else {
               setState(() {
+                _singleton.editDirty = true;
                 selectedChoices.contains(item)
                     ? selectedChoices.remove(item)
                     : selectedChoices.add(item);

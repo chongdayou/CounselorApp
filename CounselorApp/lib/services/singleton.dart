@@ -16,6 +16,7 @@ class Singleton {
   String _accountType = "Student";
   Map<String, dynamic>? _userData;
   Map<String, dynamic>? _currentDocument;
+  bool editDirty = false;
 
   //short getter for my variable
   int get myVariable => _myVariable;

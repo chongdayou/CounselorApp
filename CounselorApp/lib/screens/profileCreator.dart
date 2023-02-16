@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:helloworld/services/services.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:helloworld/shared/bottomBarCreator.dart';
+import 'package:helloworld/size_config.dart';
+import 'package:helloworld/services/singleton.dart';
 
 class profileCreatorScreen extends StatelessWidget {
-  const profileCreatorScreen({super.key});
+  profileCreatorScreen({super.key});
+
+  final Singleton _singleton = Singleton();
 
   @override
   Widget build(BuildContext context) {
@@ -14,49 +18,63 @@ class profileCreatorScreen extends StatelessWidget {
       email = user.email as String;
     }
     return Scaffold(
-      body: Container(
-          child: Column(
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const SizedBox(
-            height: 0, //mediaquery
+          SizedBox(
+            height: SizeConfig.blockSizeVertical! * 5, //mediaquery
           ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/default.png', // 'assets/${filename}',
-                fit: BoxFit.contain,
-                scale: 15,
-              ),
-              Column(
-                // sizedbox between each thing
-                children: [
-                  Text(
-                    email,
-                    style: const TextStyle(
-                      fontSize: 20,
+          Card(
+            color: Colors.blue.shade100,
+            child: SizedBox(
+                width: SizeConfig.blockSizeHorizontal! * 95,
+                child: Column(
+                  // sizedbox between each thing
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Image.asset(
+                          'assets/default.png', // 'assets/${filename}',
+                          fit: BoxFit.contain,
+                          scale: SizeConfig.blockSizeHorizontal! * 2,
+                        )),
+                    Text(
+                      email,
+                      style: TextStyle(
+                        fontSize: SizeConfig.blockSizeHorizontal! * 5,
+                      ),
                     ),
-                  ),
-                  const Text("Post #"),
-                  const Text("Organization"), //change to a button type thing
-                ],
-              )
-            ],
+                    Text(
+                      "Post #: ${_singleton.userData!["posts"].length}",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    const Text(
+                      "Organization",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    SizedBox(
+                      height: SizeConfig.blockSizeVertical,
+                    ) //change to a button type thing
+                  ],
+                )),
           ),
-          const SizedBox(
-            height: 0,
+
+          SizedBox(
+            height: SizeConfig.blockSizeVertical!,
           ),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/profileGeneral');
-              },
-              child: const Text('General')), //general screen
+          SizedBox(
+              width: SizeConfig.blockSizeHorizontal! * 95,
+              height: 50,
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/profileGeneral');
+                  },
+                  child: const Text('General',
+                      style: TextStyle(fontSize: 30)))), //general screen
           //sizedbox
-          ElevatedButton(
-              onPressed: () {},
-              child: const Text('Notification')), //notification screen
+          // ElevatedButton(
+          //     onPressed: () {},
+          //     child: const Text('Notification')), //notification screen
           // big sizedbox
           user == null
               ? TextButton(
@@ -67,7 +85,7 @@ class profileCreatorScreen extends StatelessWidget {
                   child: const Text("Log In"))
               : Container(), // appear if user is not login, otherwise do not appear
         ],
-      )),
+      ),
       bottomNavigationBar: navigationBarCreator(index: 1),
     );
   }

@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:helloworld/shared/bottomBar.dart';
 import 'package:helloworld/services/services.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:helloworld/size_config.dart';
+import 'package:helloworld/services/singleton.dart';
 
 class profileStudentScreen extends StatelessWidget {
-  const profileStudentScreen({super.key});
+  profileStudentScreen({super.key});
+
+  final Singleton _singleton = Singleton();
 
   @override
   Widget build(BuildContext context) {
@@ -17,44 +21,49 @@ class profileStudentScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const SizedBox(
-            height: 30, //mediaquery
+          SizedBox(
+            height: SizeConfig.blockSizeVertical! * 5, //mediaquery
           ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/default.png', // 'assets/${filename}',
-                fit: BoxFit.contain,
-                scale: 5,
-              ),
-              Column(
-                // sizedbox between each thing
-                children: [
-                  Text(
-                    email,
-                    style: const TextStyle(
-                      fontSize: 40,
+          Card(
+            color: Colors.blue.shade100,
+            child: SizedBox(
+                width: SizeConfig.blockSizeHorizontal! * 95,
+                child: Column(
+                  // sizedbox between each thing
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Image.asset(
+                          'assets/default.png', // 'assets/${filename}',
+                          fit: BoxFit.contain,
+                          scale: SizeConfig.blockSizeHorizontal! * 2,
+                        )),
+                    Text(
+                      email,
+                      style: TextStyle(
+                        fontSize: SizeConfig.blockSizeHorizontal! * 5,
+                      ),
                     ),
-                  ),
-                  const Text(
-                    "School, Grade",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  const Text(
-                    "Interests",
-                    style: TextStyle(fontSize: 20),
-                  ), //change to a button type thing
-                ],
-              )
-            ],
+                    const Text(
+                      "School, Grade",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    const Text(
+                      "Interests",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    SizedBox(
+                      height: SizeConfig.blockSizeVertical,
+                    ) //change to a button type thing
+                  ],
+                )),
           ),
-          const SizedBox(
-            height: 0,
+
+          SizedBox(
+            height: SizeConfig.blockSizeVertical!,
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width / 2 - 10,
+            width: SizeConfig.blockSizeHorizontal! * 95,
             height: 50,
             child: ElevatedButton(
                 onPressed: () {
