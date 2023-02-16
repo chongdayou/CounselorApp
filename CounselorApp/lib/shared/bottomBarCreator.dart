@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:helloworld/services/services.dart';
 import 'package:helloworld/services/singleton.dart';
 
 class navigationBarCreator extends StatelessWidget {
   final int index;
   navigationBarCreator({super.key, required this.index});
 
-  Singleton _singleton = Singleton();
+  final Singleton _singleton = Singleton();
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: index,
-      items: [
+      items: const [
         BottomNavigationBarItem(
-          icon: Icon(FontAwesomeIcons.home, size: 20),
+          icon: Icon(FontAwesomeIcons.house, size: 20),
           label: "Home",
         ),
         BottomNavigationBarItem(
@@ -39,7 +38,6 @@ class navigationBarCreator extends StatelessWidget {
             break;
         }
       },
-      // selectedLabelStyle: TextStyle(),
     );
   }
 }

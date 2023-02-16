@@ -13,18 +13,19 @@ class loginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
+      padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(
+          const Text(
             'Log In',
-            style: const TextStyle(
+            style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 25,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           TextField(
@@ -37,7 +38,7 @@ class loginScreen extends StatelessWidget {
               email = text;
             },
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           TextField(
@@ -57,7 +58,8 @@ class loginScreen extends StatelessWidget {
             child: ElevatedButton.icon(
                 icon: const Icon(FontAwesomeIcons.circleArrowRight),
                 style: TextButton.styleFrom(
-                    padding: EdgeInsets.all(50), backgroundColor: Colors.blue),
+                    padding: const EdgeInsets.all(50),
+                    backgroundColor: Colors.blue),
                 onPressed: () {
                   Auth().logIn(email, password);
                   Navigator.of(context)
@@ -65,45 +67,17 @@ class loginScreen extends StatelessWidget {
                 },
                 label: const Text("")),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           OutlinedButton(
-              child: Text('New User? Sign Up Here',
+              child: const Text('New User? Sign Up Here',
                   style: TextStyle(color: Colors.blue)),
               onPressed: () {
                 Navigator.pushNamed(context, '/signup');
               }),
-
-          // SizedBox(
-          //   height: 50,
-          // ),
-          // ElevatedButton(
-          //   labelText: 'New User? Sign up here',
-          //   style: ,
-          //   onPressed: Navigator.pushNamed(context, '/signup')
-          // ),
-
-          /*
-            Flexible(
-              child: ElevatedButton.icon(
-                icon: const Icon(
-                  FontAwesomeIcons.user,
-                  color: Colors.white,
-                  size: 20,
-                ),
-                style: TextButton.styleFrom(
-                  padding: const EdgeInsets.all(24),
-                  backgroundColor: Colors.blue,
-                ),
-                onPressed: () => Authentication().emailLogin(email, password),
-                label: const Text('Sign In', textAlign: TextAlign.center),
-              ),
-            ),
-             */
         ],
       ),
-      padding: EdgeInsets.all(20),
     ));
   }
 }

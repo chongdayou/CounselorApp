@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:helloworld/shared/bottomBar.dart';
 
 class UnsignedScreen extends StatelessWidget {
@@ -19,7 +17,7 @@ class UnsignedScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 40),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
               SizedBox(

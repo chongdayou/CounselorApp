@@ -52,16 +52,23 @@ class homeScreenStudent extends StatelessWidget {
             List<DocumentSnapshot> topics =
                 snapshot.data as List<DocumentSnapshot>;
 
-            return Flexible(
-                child: GridView.count(
-              childAspectRatio: (5 / 1),
-              crossAxisCount: 1,
-              crossAxisSpacing: 10.0,
-              mainAxisSpacing: 10.0,
-              shrinkWrap: true,
-              children:
-                  topics.map((topic) => topicEntry(document: topic)).toList(),
-            ));
+            return Expanded(
+                child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: topics
+                        .map((topic) => topicEntry(document: topic))
+                        .toList()));
+
+            // return Flexible(
+            //     child: GridView.count(
+            //   childAspectRatio: (5 / 1),
+            //   crossAxisCount: 1,
+            //   crossAxisSpacing: 10.0,
+            //   mainAxisSpacing: 10.0,
+            //   shrinkWrap: true,
+            //   children:
+            //       topics.map((topic) => topicEntry(document: topic)).toList(),
+            // ));
           },
         ),
       ]),

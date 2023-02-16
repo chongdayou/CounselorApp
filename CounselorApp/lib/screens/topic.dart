@@ -3,6 +3,7 @@ import 'package:helloworld/services/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:helloworld/services/singleton.dart';
+import 'package:helloworld/size_config.dart';
 
 // TOPIC ENTRY FOR STUDENT
 class topicEntry extends StatelessWidget {
@@ -19,7 +20,7 @@ class topicEntry extends StatelessWidget {
           selectedColor: Colors.grey,
           label: Text(
             item,
-            style: TextStyle(color: Colors.black),
+            style: const TextStyle(fontSize: 10, color: Colors.black),
           ),
           selected: true,
           onSelected: (value) {},
@@ -72,7 +73,7 @@ class topicEntry extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Container(
-                            width: 250,
+                            width: SizeConfig.blockSizeHorizontal! * 40,
                             height: 250,
                             // color: Colors.grey,
                             child: Column(
@@ -85,8 +86,8 @@ class topicEntry extends StatelessWidget {
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold),
                                 ),
-                                const SizedBox(
-                                  height: 20,
+                                SizedBox(
+                                  height: SizeConfig.blockSizeVertical!,
                                 ),
                                 Wrap(
                                   children: _buildTagsDisplay(document["tags"]),
@@ -99,7 +100,7 @@ class topicEntry extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            width: 250,
+                            width: SizeConfig.blockSizeHorizontal! * 40,
                             height: 250,
                             color: Colors.grey,
                             child: Padding(
@@ -133,7 +134,7 @@ class creatorEntry extends StatelessWidget {
           selectedColor: Colors.grey,
           label: Text(
             item,
-            style: TextStyle(color: Colors.black),
+            style: const TextStyle(fontSize: 10, color: Colors.black),
           ),
           selected: true,
           onSelected: (value) {},
@@ -186,7 +187,7 @@ class creatorEntry extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Container(
-                            width: 250,
+                            width: SizeConfig.blockSizeHorizontal! * 40,
                             height: 250,
                             // color: Colors.grey,
                             child: Column(
@@ -194,9 +195,13 @@ class creatorEntry extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(document["title"]),
-                                const SizedBox(
-                                  height: 20,
+                                Text(
+                                  document["title"],
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  height: SizeConfig.blockSizeVertical!,
                                 ),
                                 Wrap(
                                   children: _buildTagsDisplay(document["tags"]),
@@ -209,7 +214,7 @@ class creatorEntry extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            width: 250,
+                            width: SizeConfig.blockSizeHorizontal! * 40,
                             height: 250,
                             color: Colors.grey,
                             child: Padding(
@@ -221,28 +226,29 @@ class creatorEntry extends StatelessWidget {
                             ),
                           ),
                           Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              ElevatedButton.icon(
-                                  icon:
-                                      const Icon(FontAwesomeIcons.penToSquare),
-                                  style: TextButton.styleFrom(
-                                      padding: EdgeInsets.all(25),
-                                      backgroundColor: Colors.blue),
+                              SizedBox(
+                                height: SizeConfig.blockSizeVertical! * 8,
+                                width: SizeConfig.blockSizeHorizontal! * 15,
+                                child: TextButton(
                                   onPressed: () {
                                     _singleton.currentDocument = document;
                                     Navigator.pushNamed(context, '/createPost');
                                   },
-                                  label: const Text("")),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              ElevatedButton.icon(
-                                  icon: const Icon(FontAwesomeIcons.trash),
-                                  style: TextButton.styleFrom(
-                                      padding: EdgeInsets.all(25),
+                                  style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.blue),
+                                  child: const Icon(
+                                    FontAwesomeIcons.penToSquare,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: SizeConfig.blockSizeVertical! * 8,
+                                width: SizeConfig.blockSizeHorizontal! * 15,
+                                child: TextButton(
                                   onPressed: () {
                                     final userRef = FirebaseFirestore.instance
                                         .collection('user_data')
@@ -259,7 +265,40 @@ class creatorEntry extends StatelessWidget {
                                         .doc(document["doc_id"])
                                         .delete();
                                   },
-                                  label: const Text("")),
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.red.shade400),
+                                  child: const Icon(
+                                    FontAwesomeIcons.trash,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              // ElevatedButton.icon(
+                              //     icon: const Icon(FontAwesomeIcons.trash),
+                              //     style: ElevatedButton.styleFrom(
+                              //         minimumSize: Size(
+                              //             SizeConfig.blockSizeHorizontal!,
+                              //             SizeConfig.blockSizeVertical! * 7.5),
+                              //         // padding: EdgeInsets.all(
+                              //         //     SizeConfig.blockSizeHorizontal!),
+                              //         backgroundColor: Colors.red.shade400),
+                              //     onPressed: () {
+                              //       final userRef = FirebaseFirestore.instance
+                              //           .collection('user_data')
+                              //           .doc(Auth().user!.uid);
+
+                              //       final updates = <String, dynamic>{
+                              //         "posts.${document["doc_id"]}":
+                              //             FieldValue.delete(),
+                              //       };
+
+                              //       userRef.update(updates);
+                              //       FirebaseFirestore.instance
+                              //           .collection('topics')
+                              //           .doc(document["doc_id"])
+                              //           .delete();
+                              //     },
+                              //     label: const Text("")),
                             ],
                           )
                         ],

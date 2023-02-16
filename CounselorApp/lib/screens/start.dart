@@ -9,6 +9,7 @@ import 'package:helloworld/screens/verification.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:helloworld/services/singleton.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:helloworld/size_config.dart';
 
 class startScreen extends StatelessWidget {
   startScreen({Key? key}) : super(key: key);
@@ -19,6 +20,7 @@ class startScreen extends StatelessWidget {
   TextEditingController searchBarController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return StreamBuilder(
       stream: Auth().userStream,
       builder: ((context, snapshot) {

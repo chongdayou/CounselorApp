@@ -1,7 +1,4 @@
-import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/material.dart';
-import 'package:helloworld/shared/bottomBar.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:helloworld/services/services.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:helloworld/shared/bottomBarCreator.dart';
@@ -16,13 +13,12 @@ class profileCreatorScreen extends StatelessWidget {
     if (user != null) {
       email = user.email as String;
     }
-    print(user);
     return Scaffold(
       body: Container(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 0, //mediaquery
           ),
           Row(
@@ -39,17 +35,17 @@ class profileCreatorScreen extends StatelessWidget {
                 children: [
                   Text(
                     email,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20,
                     ),
                   ),
-                  Text("Post #"),
-                  Text("Organization"), //change to a button type thing
+                  const Text("Post #"),
+                  const Text("Organization"), //change to a button type thing
                 ],
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 0,
           ),
           ElevatedButton(

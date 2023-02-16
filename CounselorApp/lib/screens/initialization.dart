@@ -6,19 +6,6 @@ import 'package:helloworld/services/singleton.dart';
 import 'package:helloworld/screens/homeScreenStudent.dart';
 import 'package:helloworld/screens/homeScreenCreator.dart';
 
-// class LoadingWheel extends StatelessWidget {
-//   const LoadingWheel({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const SizedBox(
-//       width: 100,
-//       height: 100,
-//       child: CircularProgressIndicator(),
-//     );
-//   }
-// }
-
 class InitializationScreen extends StatelessWidget {
   InitializationScreen({super.key});
 
@@ -41,29 +28,22 @@ class InitializationScreen extends StatelessWidget {
             return const LoadingScreen();
           }
 
-          print("Here is the data: ${snapshot.data}");
+          // print("Here is the data: ${snapshot.data}");
           if (snapshot.data!.data() != null) {
             Map<String, dynamic> data =
                 snapshot.data!.data() as Map<String, dynamic>;
             _singleton.userData = data;
 
             if (data["account_type"] == "Creator") {
-              print("CREATOR PAGE");
+              // print("CREATOR PAGE");
               _singleton.accountType = "Creator";
               return homeScreenCreator();
             }
           }
 
-          print("STUDENT PAGE");
+          // print("STUDENT PAGE");
           _singleton.accountType = "Student";
           return homeScreenStudent();
-          // if (data["account_type"] == "Student") {
-
-          // } else {
-          //   print("CREATOR PAGE");
-          //   _singleton.accountType = "Creator";
-          //   return homeScreenCreator();
-          // }
         }));
   }
 }

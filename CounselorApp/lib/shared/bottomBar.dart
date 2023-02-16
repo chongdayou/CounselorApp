@@ -7,15 +7,15 @@ class navigationBar extends StatelessWidget {
   final int index;
   navigationBar({super.key, required this.index});
 
-  Singleton _singleton = Singleton();
+  final Singleton _singleton = Singleton();
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: index,
-      items: [
+      items: const [
         BottomNavigationBarItem(
-          icon: Icon(FontAwesomeIcons.home, size: 20),
+          icon: Icon(FontAwesomeIcons.house, size: 20),
           label: "Home",
         ),
         BottomNavigationBarItem(
@@ -52,7 +52,6 @@ class navigationBar extends StatelessWidget {
             break;
         }
       },
-      // selectedLabelStyle: TextStyle(),
     );
   }
 }

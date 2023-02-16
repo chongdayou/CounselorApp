@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helloworld/shared/bottomBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:helloworld/size_config.dart';
 import 'package:helloworld/shared/bottomBarCreator.dart';
 import 'package:sentiment_dart/sentiment_dart.dart';
 import 'package:helloworld/screens/topic.dart';
@@ -73,7 +73,11 @@ class _homeScreenCreator extends State<homeScreenCreator> {
                 //           borderRadius: BorderRadius.circular(30)),
                 //       labelText: 'Search'),
                 // ),
+                SizedBox(
+                  height: SizeConfig.blockSizeHorizontal! * 15,
+                ),
                 Center(
+                    heightFactor: 0.25,
                     child: FloatingActionButton(
                         backgroundColor: Colors.green,
                         child: Icon(Icons.add),
@@ -84,13 +88,9 @@ class _homeScreenCreator extends State<homeScreenCreator> {
                           //     .add({'category': 'volunteer'});
                         })),
                 (topics.isNotEmpty)
-                    ? Flexible(
-                        child: GridView.count(
-                        childAspectRatio: (5 / 1),
-                        crossAxisCount: 1,
-                        crossAxisSpacing: 10.0,
-                        mainAxisSpacing: 10.0,
-                        shrinkWrap: true,
+                    ? Expanded(
+                        child: ListView(
+                        scrollDirection: Axis.vertical,
                         children: topics
                             .map((topic) => creatorEntry(
                                   document: topic,

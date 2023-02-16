@@ -1,7 +1,5 @@
-import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/material.dart';
 import 'package:helloworld/shared/bottomBar.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:helloworld/services/services.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
@@ -15,13 +13,11 @@ class profileStudentScreen extends StatelessWidget {
     if (user != null) {
       email = user.email as String;
     }
-    print(user);
     return Scaffold(
-      body: Container(
-          child: Column(
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 30, //mediaquery
           ),
           Row(
@@ -38,15 +34,15 @@ class profileStudentScreen extends StatelessWidget {
                 children: [
                   Text(
                     email,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 40,
                     ),
                   ),
-                  Text(
+                  const Text(
                     "School, Grade",
                     style: TextStyle(fontSize: 20),
                   ),
-                  Text(
+                  const Text(
                     "Interests",
                     style: TextStyle(fontSize: 20),
                   ), //change to a button type thing
@@ -54,7 +50,7 @@ class profileStudentScreen extends StatelessWidget {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 0,
           ),
           SizedBox(
@@ -84,7 +80,7 @@ class profileStudentScreen extends StatelessWidget {
                   child: const Text("Log In"))
               : Container(), // appear if user is not login, otherwise do not appear
         ],
-      )),
+      ),
       bottomNavigationBar: navigationBar(index: 2),
     );
   }
