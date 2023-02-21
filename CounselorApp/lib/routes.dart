@@ -12,9 +12,12 @@ import 'package:helloworld/screens/profileCreator.dart';
 import 'package:helloworld/screens/createPost.dart';
 import 'package:helloworld/screens/unsignedScreen.dart';
 import 'package:helloworld/screens/initialization.dart';
+import 'package:helloworld/screens/forYouScreen.dart';
+import 'package:helloworld/screens/activityScreen.dart';
 
 var screenRoutes = {
   '/': (context) => startScreen(),
+  '/initialization': (context) => InitializationScreen(),
   '/login': (context) => loginScreen(),
   '/signup': (context) => const signupScreen(),
   '/verification': (context) => const verificationScreen(),
@@ -27,5 +30,6 @@ var screenRoutes = {
   '/profileNotification': (context) => const profileNotificationScreen(),
   '/createPost': (context) => createPostScreen(),
   '/unsignedScreen': (context) => const UnsignedScreen(),
-  '/initialization': (context) => InitializationScreen(),
+  '/forYouScreen': (context) => ForYouScreen(),
+  '/activityScreen': (context) => ActivityScreen(),
 };

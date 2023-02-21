@@ -23,7 +23,7 @@ class homeScreenStudent extends StatelessWidget {
     // Get docs from collection reference
     QuerySnapshot querySnapshot = await _collectionRef.get();
 
-    List<DocumentSnapshot> data = querySnapshot.docs as List<DocumentSnapshot>;
+    List<DocumentSnapshot> data = querySnapshot.docs;
     return data;
   }
 
@@ -51,6 +51,8 @@ class homeScreenStudent extends StatelessWidget {
 
             List<DocumentSnapshot> topics =
                 snapshot.data as List<DocumentSnapshot>;
+
+            _singleton.postsCache = topics;
 
             return Expanded(
                 child: ListView(

@@ -40,6 +40,8 @@ class navigationBar extends StatelessWidget {
           case 1: // for you
             if (Auth().user == null) {
               Navigator.pushNamed(context, '/unsignedScreen');
+            } else {
+              Navigator.pushNamed(context, '/forYouScreen');
             }
             break;
           case 2: // profile
