@@ -27,8 +27,7 @@ class _MyAppState extends State<MyApp> {
             routes: screenRoutes,
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-                scaffoldBackgroundColor:
-                    const Color.fromARGB(255, 255, 255, 255)),
+                scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255)),
           );
         }
         return Container();
