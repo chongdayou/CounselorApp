@@ -46,6 +46,10 @@ class _createPostScreen extends State<createPostScreen> {
       contactLinkController.text = _singleton.currentDocument!["contact_link"];
       contactLink = contactLinkController.text;
       print("Testing: ${_singleton.currentDocument!["doc_id"]}");
+
+      for (String item in _singleton.currentDocument!["tags"]) {
+        selectedReportList.add(item);
+      }
     }
 
     return Scaffold(
