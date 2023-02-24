@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:helloworld/services/services.dart';
 import 'package:helloworld/shared/shared.dart';
+import 'package:helloworld/size_config.dart';
 import 'quizstate.dart';
 
 class QuizScreen extends StatelessWidget {
@@ -59,7 +60,27 @@ class StartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var state = Provider.of<QuizState>(context);
-    return Container();
+    return Container(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(quiz.title, style: TextStyle(fontSize: 36)),
+            const Divider(),
+            Expanded(
+                child: Text(
+              quiz.description,
+              style: const TextStyle(fontSize: 20),
+            )),
+            SizedBox(
+                width: SizeConfig.blockSizeHorizontal! * 95,
+                height: 50,
+                child: ElevatedButton(
+                    onPressed: state.nextQuestion,
+                    child: const Text('Start Quiz!',
+                        style: TextStyle(fontSize: 30)))),
+          ],
+        ));
   }
 }
 
@@ -70,7 +91,7 @@ class QuestionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var state = Provider.of<QuizState>(context);
-    return Container();
+    return Column();
   }
 }
 

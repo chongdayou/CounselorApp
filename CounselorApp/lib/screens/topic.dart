@@ -230,7 +230,7 @@ class creatorEntry extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               SizedBox(
-                                height: SizeConfig.blockSizeVertical! * 8,
+                                height: 71,
                                 width: SizeConfig.blockSizeHorizontal! * 15,
                                 child: TextButton(
                                   onPressed: () {
@@ -246,7 +246,7 @@ class creatorEntry extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(
-                                height: SizeConfig.blockSizeVertical! * 8,
+                                height: 71,
                                 width: SizeConfig.blockSizeHorizontal! * 15,
                                 child: TextButton(
                                   onPressed: () {

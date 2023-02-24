@@ -3,6 +3,7 @@ import 'package:helloworld/shared/bottomBar.dart';
 import 'package:helloworld/size_config.dart';
 import 'package:helloworld/services/singleton.dart';
 import 'package:helloworld/screens/topic.dart';
+import 'package:helloworld/quiz/quiz.dart';
 import 'package:sentiment_dart/sentiment_dart.dart';
 
 class ForYouScreen extends StatelessWidget {
@@ -12,13 +13,17 @@ class ForYouScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (_singleton.userData!.containsKey("preferences")) {
+    if (_singleton.userData != null &&
+        _singleton.userData!.containsKey("preferences")) {
       // if the user already has preference parameters set
       print("The user has preferences set!");
-    } else {
+    } else if (_singleton.userData != null) {
       // send them to the recommendation quiz!
       print("The user does not have preferences set!");
       // Navigator.pushNamed(context, '/quizScreen');
+      // Navigator.of(context).push(MaterialPageRoute(
+      //   builder: (BuildContext context) => QuizScreen(),
+      // ));
     }
 
     return Scaffold(
