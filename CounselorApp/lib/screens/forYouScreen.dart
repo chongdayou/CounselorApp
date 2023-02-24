@@ -12,6 +12,15 @@ class ForYouScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (_singleton.userData!.containsKey("preferences")) {
+      // if the user already has preference parameters set
+      print("The user has preferences set!");
+    } else {
+      // send them to the recommendation quiz!
+      print("The user does not have preferences set!");
+      // Navigator.pushNamed(context, '/quizScreen');
+    }
+
     return Scaffold(
       body: Column(
         children: [
