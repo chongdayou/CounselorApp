@@ -1,9 +1,12 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:helloworld/services/models.dart';
 
 class QuizState with ChangeNotifier {
   double _progress = 0;
   Option? _selected;
+  Map<String, double> preferences = {};
 
   final PageController controller = PageController();
 

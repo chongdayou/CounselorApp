@@ -39,7 +39,7 @@ class startScreen extends StatelessWidget {
               return verificationScreen();
             } else {
               // User is already verified
-              print("TESTING");
+              // print("TESTING");
 
               // final docRef = FirebaseFirestore.instance
               //     .collection("user_data")
