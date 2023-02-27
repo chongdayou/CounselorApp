@@ -19,6 +19,7 @@ class Singleton {
   bool editDirty = false;
   List<DocumentSnapshot>? postsCache;
   bool refreshing = false;
+  Map<String, double>? preferences;
 
   //short getter for my variable
   int get myVariable => _myVariable;

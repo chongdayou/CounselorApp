@@ -3,28 +3,33 @@ import 'package:helloworld/shared/bottomBar.dart';
 import 'package:helloworld/size_config.dart';
 import 'package:helloworld/services/singleton.dart';
 import 'package:helloworld/screens/topic.dart';
-import 'package:helloworld/quiz/quiz.dart';
 import 'package:sentiment_dart/sentiment_dart.dart';
 
 class ForYouScreen extends StatelessWidget {
   ForYouScreen({super.key});
 
-  Singleton _singleton = Singleton();
+  final Singleton _singleton = Singleton();
 
   @override
   Widget build(BuildContext context) {
-    // if (_singleton.userData != null &&
-    //     _singleton.userData!.containsKey("preferences")) {
-    //   // if the user already has preference parameters set
-    //   print("The user has preferences set!");
-    // } else if (_singleton.userData != null) {
-    //   // send them to the recommendation quiz!
-    //   print("The user does not have preferences set!");
-    //   Navigator.pushNamed(context, '/quizScreen');
-    //   // Navigator.of(context).push(MaterialPageRoute(
-    //   //   builder: (BuildContext context) => QuizScreen(),
-    //   // ));
-    // }
+    var customLang = _singleton.preferences;
+    List<topicEntry> sortedPosts = [];
+    // setup sorted list of posts
+    if (_singleton.postsCache != null) {
+      sortedPosts = _singleton.postsCache! // add the tag sorting logic here
+          .map((topic) => topicEntry(
+                document: topic,
+              ))
+          .toList();
+
+      sortedPosts.sort(((a, b) => Sentiment.analysis(
+              b.document["tags"].join(' '),
+              customLang: customLang)
+          .score
+          .compareTo(Sentiment.analysis(a.document["tags"].join(' '),
+                  customLang: customLang)
+              .score)));
+    }
 
     return Scaffold(
       body: Column(
@@ -43,12 +48,7 @@ class ForYouScreen extends StatelessWidget {
               ? Expanded(
                   child: ListView(
                   scrollDirection: Axis.vertical,
-                  children:
-                      _singleton.postsCache! // add the tag sorting logic here
-                          .map((topic) => topicEntry(
-                                document: topic,
-                              ))
-                          .toList(),
+                  children: sortedPosts,
                 ))
               : Container(),
         ],

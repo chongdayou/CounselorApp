@@ -45,7 +45,15 @@ class navigationBar extends StatelessWidget {
                   _singleton.userData!.containsKey("preferences")) {
                 // if the user already has preference parameters set
                 Navigator.pushNamed(context, '/forYouScreen');
+                _singleton.preferences = {};
+                Map map = _singleton.userData?["preferences"] as Map;
+                map.forEach(
+                  (key, value) {
+                    _singleton.preferences?[key] = value;
+                  },
+                );
                 print("The user has preferences set!");
+                print(_singleton.preferences);
               } else if (_singleton.userData != null) {
                 // send them to the recommendation quiz!
                 print("The user does not have preferences set!");
