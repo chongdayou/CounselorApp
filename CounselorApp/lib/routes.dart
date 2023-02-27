@@ -14,6 +14,7 @@ import 'package:helloworld/screens/unsignedScreen.dart';
 import 'package:helloworld/screens/initialization.dart';
 import 'package:helloworld/screens/forYouScreen.dart';
 import 'package:helloworld/screens/activityScreen.dart';
+import 'package:helloworld/quiz/quiz.dart';
 
 var screenRoutes = {
   '/': (context) => startScreen(),
@@ -32,4 +33,5 @@ var screenRoutes = {
   '/unsignedScreen': (context) => const UnsignedScreen(),
   '/forYouScreen': (context) => ForYouScreen(),
   '/activityScreen': (context) => ActivityScreen(),
+  '/quizScreen': (context) => QuizScreen(),
 };

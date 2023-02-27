@@ -18,6 +18,7 @@ class Singleton {
   Map<String, dynamic>? currentDocument;
   bool editDirty = false;
   List<DocumentSnapshot>? postsCache;
+  bool refreshing = false;
 
   //short getter for my variable
   int get myVariable => _myVariable;

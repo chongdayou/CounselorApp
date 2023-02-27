@@ -41,7 +41,19 @@ class navigationBar extends StatelessWidget {
             if (Auth().user == null) {
               Navigator.pushNamed(context, '/unsignedScreen');
             } else {
-              Navigator.pushNamed(context, '/forYouScreen');
+              if (_singleton.userData != null &&
+                  _singleton.userData!.containsKey("preferences")) {
+                // if the user already has preference parameters set
+                Navigator.pushNamed(context, '/forYouScreen');
+                print("The user has preferences set!");
+              } else if (_singleton.userData != null) {
+                // send them to the recommendation quiz!
+                print("The user does not have preferences set!");
+                Navigator.pushNamed(context, '/quizScreen');
+                // Navigator.of(context).push(MaterialPageRoute(
+                //   builder: (BuildContext context) => QuizScreen(),
+                // ));
+              }
             }
             break;
           case 2: // profile

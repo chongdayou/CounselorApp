@@ -61,11 +61,11 @@ class StartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var state = Provider.of<QuizState>(context);
     return Container(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(quiz.title, style: TextStyle(fontSize: 36)),
+            Text(quiz.title, style: const TextStyle(fontSize: 36)),
             const Divider(),
             Expanded(
                 child: Text(
@@ -91,7 +91,15 @@ class QuestionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var state = Provider.of<QuizState>(context);
-    return Column();
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Expanded(
+            child: Container(
+          alignment: Alignment.center,
+        ))
+      ],
+    );
   }
 }
 

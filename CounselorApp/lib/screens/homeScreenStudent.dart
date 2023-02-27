@@ -8,8 +8,22 @@ import 'package:helloworld/services/services.dart';
 import 'package:helloworld/services/singleton.dart';
 import 'package:helloworld/shared/loading.dart';
 
-class homeScreenStudent extends StatelessWidget {
-  homeScreenStudent({super.key});
+class homeScreenStudent extends StatefulWidget {
+  const homeScreenStudent({super.key});
+
+  @override
+  State<homeScreenStudent> createState() => _homeScreenStudentState();
+}
+
+// class _homeScreenStudentState extends State<homeScreenStudent> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container();
+//   }
+// }
+
+class _homeScreenStudentState extends State<homeScreenStudent> {
+  // homeScreenStudent({super.key});
 
   Singleton _singleton = Singleton();
 
@@ -21,10 +35,16 @@ class homeScreenStudent extends StatelessWidget {
 
   Future<List<Object?>> getData() async {
     // Get docs from collection reference
-    QuerySnapshot querySnapshot = await _collectionRef.get();
 
-    List<DocumentSnapshot> data = querySnapshot.docs;
-    return data;
+    if (_singleton.postsCache == null || _singleton.refreshing) {
+      QuerySnapshot querySnapshot = await _collectionRef.get();
+      print("Using new posts");
+      _singleton.refreshing = false;
+      List<DocumentSnapshot> data = querySnapshot.docs;
+      return data;
+    }
+    print("Using cached posts");
+    return _singleton.postsCache as List<DocumentSnapshot>;
   }
 
   @override
@@ -55,11 +75,20 @@ class homeScreenStudent extends StatelessWidget {
             _singleton.postsCache = topics;
 
             return Expanded(
+              child: RefreshIndicator(
                 child: ListView(
                     scrollDirection: Axis.vertical,
                     children: topics
                         .map((topic) => topicEntry(document: topic))
-                        .toList()));
+                        .toList()),
+                onRefresh: () {
+                  return Future.delayed(const Duration(seconds: 1), () {
+                    _singleton.refreshing = true;
+                    setState(() {});
+                  });
+                },
+              ),
+            );
 
             // return Flexible(
             //     child: GridView.count(
