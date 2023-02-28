@@ -58,7 +58,16 @@ class profileCreatorScreen extends StatelessWidget {
                   ],
                 )),
           ),
-
+          SizedBox(
+            height: SizeConfig.blockSizeVertical!,
+          ),
+          SizedBox(
+              width: SizeConfig.blockSizeHorizontal! * 95,
+              height: 50,
+              child: ElevatedButton(
+                  onPressed: () {},
+                  child:
+                      const Text('My Card', style: TextStyle(fontSize: 30)))),
           SizedBox(
             height: SizeConfig.blockSizeVertical!,
           ),
@@ -69,8 +78,17 @@ class profileCreatorScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushNamed(context, '/profileGeneral');
                   },
-                  child: const Text('General',
+                  child: const Text('Settings',
                       style: TextStyle(fontSize: 30)))), //general screen
+          SizedBox(
+            height: SizeConfig.blockSizeVertical!,
+          ),
+          SizedBox(
+              width: SizeConfig.blockSizeHorizontal! * 95,
+              height: 50,
+              child: ElevatedButton(
+                  onPressed: () {},
+                  child: const Text('Themes', style: TextStyle(fontSize: 30)))),
           //sizedbox
           // ElevatedButton(
           //     onPressed: () {},

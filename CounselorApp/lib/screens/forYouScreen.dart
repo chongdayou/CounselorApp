@@ -42,7 +42,7 @@ class ForYouScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushNamed(context, '/activityScreen');
                   },
-                  child: const Text('New Activity +',
+                  child: const Text('Preferences',
                       style: TextStyle(fontSize: 30)))),
           (_singleton.postsCache != null)
               ? Expanded(

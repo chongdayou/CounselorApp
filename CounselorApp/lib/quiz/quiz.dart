@@ -26,7 +26,7 @@ class QuizScreen extends StatelessWidget {
 
                 return Scaffold(
                   appBar: AppBar(
-                    title: const Text("Intro Quiz"),
+                    title: const Text("Welcome"),
                     leading: IconButton(
                       icon: const Icon(FontAwesomeIcons.xmark),
                       onPressed: () => Navigator.pop(context),
@@ -42,7 +42,7 @@ class QuizScreen extends StatelessWidget {
                       if (idx == 0) {
                         return StartPage(quiz: quiz);
                       } else if (idx == quiz.questions.length + 1) {
-                        print("TESTING: ${state.preferences}");
+                        // print("TESTING: ${state.preferences}");
                         return EndPage(preferences: state.preferences);
                       } else {
                         return QuestionPage(question: quiz.questions[idx - 1]);
@@ -69,6 +69,9 @@ class StartPage extends StatelessWidget {
           children: [
             Text(quiz.title, style: const TextStyle(fontSize: 36)),
             const Divider(),
+            const SizedBox(
+              height: 40,
+            ),
             Expanded(
                 child: Text(
               quiz.description,
@@ -99,7 +102,9 @@ class QuestionPage extends StatelessWidget {
         Expanded(
             child: Container(
           alignment: Alignment.center,
-          child: Text(question.text, style: const TextStyle(fontSize: 30)),
+          child: SizedBox(
+              width: SizeConfig.blockSizeHorizontal! * 90,
+              child: Text(question.text, style: const TextStyle(fontSize: 30))),
         )),
         Container(
           padding: const EdgeInsets.all(20),

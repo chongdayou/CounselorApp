@@ -20,6 +20,7 @@ class Singleton {
   List<DocumentSnapshot>? postsCache;
   bool refreshing = false;
   Map<String, double>? preferences;
+  List<String> tags = ["leadership", "volunteer", "math", "internship"];
 
   //short getter for my variable
   int get myVariable => _myVariable;
