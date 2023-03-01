@@ -20,7 +20,7 @@ class loginScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text(
-            'Counselor App',
+            'Maclever',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 35,

@@ -28,12 +28,12 @@ class InitializationScreen extends StatelessWidget {
             return const LoadingScreen();
           }
 
-          // print("Here is the data: ${snapshot.data}");
+          print("Here is the data: ${snapshot.data}");
           if (snapshot.data!.data() != null) {
             Map<String, dynamic> data =
                 snapshot.data!.data() as Map<String, dynamic>;
             _singleton.userData = data;
-
+            print("yes");
             if (data["account_type"] == "Creator") {
               // print("CREATOR PAGE");
               _singleton.accountType = "Creator";

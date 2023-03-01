@@ -41,6 +41,7 @@ class navigationBar extends StatelessWidget {
             if (Auth().user == null) {
               Navigator.pushNamed(context, '/unsignedScreen');
             } else {
+              print("tester");
               if (_singleton.userData != null &&
                   _singleton.userData!.containsKey("preferences")) {
                 // if the user already has preference parameters set
@@ -62,6 +63,7 @@ class navigationBar extends StatelessWidget {
                 //   builder: (BuildContext context) => QuizScreen(),
                 // ));
               }
+              print(_singleton.userData);
             }
             break;
           case 2: // profile

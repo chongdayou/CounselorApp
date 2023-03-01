@@ -17,7 +17,7 @@ class topicEntry extends StatelessWidget {
       choices.add(Container(
         padding: const EdgeInsets.all(2.0),
         child: ChoiceChip(
-          selectedColor: Colors.grey,
+          selectedColor: Color.fromARGB(255, 255, 255, 255),
           label: Text(
             item,
             style: const TextStyle(fontSize: 10, color: Colors.black),
@@ -60,7 +60,7 @@ class topicEntry extends StatelessWidget {
               // padding: const EdgeInsets.all(8.0),
               child: Card(
                   clipBehavior: Clip.antiAlias,
-                  color: Color.fromARGB(164, 163, 204, 220),
+                  color: Color.fromARGB(238, 37, 161, 209),
                   child: InkWell(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
@@ -102,7 +102,7 @@ class topicEntry extends StatelessWidget {
                           Container(
                             width: SizeConfig.blockSizeHorizontal! * 40,
                             height: 250,
-                            color: Colors.grey,
+                            color: Color.fromARGB(0, 158, 158, 158),
                             child: Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text(
