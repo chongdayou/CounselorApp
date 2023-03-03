@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:helloworld/shared/bottomBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:sentiment_dart/sentiment_dart.dart';
 import 'package:helloworld/screens/topic.dart';
-import 'package:helloworld/services/services.dart';
 import 'package:helloworld/services/singleton.dart';
-import 'package:helloworld/shared/loading.dart';
 
 class homeScreenStudent extends StatefulWidget {
   const homeScreenStudent({super.key});

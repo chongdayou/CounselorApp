@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:helloworld/shared/bottomBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:helloworld/size_config.dart';
 import 'package:helloworld/shared/bottomBarCreator.dart';
-import 'package:sentiment_dart/sentiment_dart.dart';
 import 'package:helloworld/screens/topic.dart';
 import 'package:helloworld/services/singleton.dart';
 import 'package:helloworld/services/auth.dart';
