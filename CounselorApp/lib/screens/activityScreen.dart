@@ -86,10 +86,10 @@ class _ActivityScreenState extends State<ActivityScreen> {
                   height: 70,
                   child: ElevatedButton(
                       onPressed: () {
-                        activities.forEach((element) {
+                        for (var element in activities) {
                           _singleton.preferences![element.tag] =
                               element.preference!;
-                        });
+                        }
                         // print("OHO ${_singleton.preferences}");
                         FirebaseFirestore.instance
                             .collection('user_data')

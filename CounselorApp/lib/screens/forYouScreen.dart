@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:helloworld/shared/bottomBar.dart';
 import 'package:helloworld/size_config.dart';
 import 'package:helloworld/services/singleton.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:helloworld/screens/topic.dart';
 import 'package:sentiment_dart/sentiment_dart.dart';
 
@@ -15,6 +16,21 @@ class ForYouScreen extends StatelessWidget {
     var customLang = _singleton.preferences;
     List<topicEntry> sortedPosts = [];
     // setup sorted list of posts
+
+    if (_singleton.tags.isEmpty) {
+      final docRef = FirebaseFirestore.instance
+          .collection("metadata")
+          .doc("tags_repository");
+      docRef.get().then(
+        (DocumentSnapshot doc) {
+          final data = doc.data() as Map<String, dynamic>;
+          List<String> tags = List<String>.from(data["tags"]);
+          _singleton.tags = tags;
+        },
+        onError: (e) => print("Error getting document: $e"),
+      );
+    }
+
     if (_singleton.postsCache != null) {
       sortedPosts = _singleton.postsCache! // add the tag sorting logic here
           .map((topic) => topicEntry(
