@@ -131,7 +131,7 @@ class creatorEntry extends StatelessWidget {
       choices.add(Container(
         padding: const EdgeInsets.all(2.0),
         child: ChoiceChip(
-          selectedColor: Colors.grey,
+          selectedColor: Color.fromARGB(255, 255, 255, 255),
           label: Text(
             item,
             style: const TextStyle(fontSize: 10, color: Colors.black),
@@ -174,7 +174,7 @@ class creatorEntry extends StatelessWidget {
               // padding: const EdgeInsets.all(8.0),
               child: Card(
                   clipBehavior: Clip.antiAlias,
-                  color: Color.fromARGB(164, 163, 204, 220),
+                  color: Color.fromARGB(238, 37, 161, 209),
                   child: InkWell(
                       onTap: () {
                         // Navigator.of(context).push(MaterialPageRoute(
@@ -216,7 +216,7 @@ class creatorEntry extends StatelessWidget {
                           Container(
                             width: SizeConfig.blockSizeHorizontal! * 40,
                             height: 250,
-                            color: Colors.grey,
+                            // color: Colors.grey,
                             child: Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text(
@@ -238,7 +238,8 @@ class creatorEntry extends StatelessWidget {
                                     Navigator.pushNamed(context, '/createPost');
                                   },
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.blue),
+                                      backgroundColor:
+                                          Color.fromARGB(238, 37, 161, 209)),
                                   child: const Icon(
                                     FontAwesomeIcons.penToSquare,
                                     color: Colors.white,

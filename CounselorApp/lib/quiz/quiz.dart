@@ -187,6 +187,8 @@ class EndPage extends StatelessWidget {
           label: const Text(' Mark Complete!'),
           onPressed: () {
             // Write the permissions onto the user data
+            print("Attempting preference update for ${Auth().user!.uid}");
+            print(preferences);
             FirebaseFirestore.instance
                 .collection('user_data')
                 .doc(Auth().user!.uid)
